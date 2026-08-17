@@ -1,0 +1,42 @@
+[
+  {
+    "transformer_id": "TX-001",
+    "display_name": "Substation Main TX-1",
+    "location": "Coimbatore",
+    "scenario": "NORMAL",
+    "enabled": true,
+    "description": "Primary regional substation transformer operating on baseline historical telemetry stream."
+  },
+  {
+    "transformer_id": "TX-002",
+    "display_name": "Industrial Feeder TX-2",
+    "location": "Chennai",
+    "scenario": "HIGH_POWER_DEMAND",
+    "enabled": true,
+    "description": "Heavy industrial park feeder transformer experiencing peak active power demand surge."
+  },
+  {
+    "transformer_id": "TX-003",
+    "display_name": "Generation Plant TX-3",
+    "location": "Madurai",
+    "scenario": "THERMAL_OVERLOAD",
+    "enabled": true,
+    "description": "Thermal power plant step-up transformer displaying elevated oil and winding thermal stress."
+  },
+  {
+    "transformer_id": "TX-004",
+    "display_name": "Rural Grid TX-4",
+    "location": "Salem",
+    "scenario": "NORMAL",
+    "enabled": true,
+    "description": "Agricultural distribution transformer operating under low-load healthy baseline conditions."
+  },
+  {
+    "transformer_id": "TX-005",
+    "display_name": "Coastal Substation TX-5",
+    "location": "Tuticorin",
+    "scenario": "HEAVY_RAIN",
+    "enabled": true,
+    "description": "Coastal seaport substation transformer exposed to high relative humidity and precipitation."
+  }
+]

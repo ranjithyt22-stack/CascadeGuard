@@ -1,0 +1,23 @@
+CASCADEGUARD CHILLER DATASET SUITABILITY REPORT
+=====================================================
+Dataset File: 11000.xlsx
+Total Rows: 11,000
+Total Columns: 17
+Sheets: ['Sheet1']
+
+Target Column: label
+Number of Classes: 8
+Class Distribution: {1: 4000, 3: 1000, 2: 1000, 4: 1000, 6: 1000, 7: 1000, 5: 1000, 8: 1000}
+Normal Class Present: False (Value: None)
+Severity Information: No explicit severity column found.
+
+Timestamp Available: False (None)
+Missing Values: 0
+Duplicate Rows: 3
+
+Numerical ML Features (16): ['TEI', 'TEO', 'TCI', 'TCO', 'kW', 'TEA', 'TCA', 'TRE', 'TRC', 'TRC_sub', 'T_suc', 'Tsh_suc', 'TR_dis', 'Tsh_dis', 'TO_sump', 'PO_net']
+Non-Feature Columns: ['label']
+
+Class Imbalance Ratio: 4.00:1
+Recommended Model Type: XGBoost Classifier / Multi-Class Classifier
+Suitability for CascadeGuard: HIGH — Ideal for HVAC Chiller operational fault classification & cascade risk scoring.

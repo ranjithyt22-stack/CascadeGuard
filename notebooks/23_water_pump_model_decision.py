@@ -1,0 +1,54 @@
+import json
+import pandas as pd
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+MODELS_DIR = BASE_DIR / "models"
+REPORTS_DIR = BASE_DIR / "reports"
+REPORTS_DIR.mkdir(parents=True, exist_ok=True)
+
+print("=" * 70)
+print("CASCADEGUARD PHASE 8F: FINAL DECISION GATE & REGISTRY EXPORT")
+print("=" * 70)
+
+decision_json = {
+  "model": "water_pump",
+  "status": "DECISION_SUPPORT_ONLY",
+  "validation_strategy": "WALK_FORWARD_TEMPORAL_VALIDATION",
+  "random_split_allowed": False,
+  "data_leakage_detected": True,
+  "autocorrelation_leakage_note": "Random 80/20 split produces deceptively high R2 = +0.9425 due to minute-by-minute autocorrelation (lag-1 target corr = 0.9999). Leakage-safe walk-forward validation produces R2 = -4.0090.",
+  "production_rul_claim": False,
+  "baseline_comparison_completed": True,
+  "beats_median_baseline": False,
+  "regime_shift_detected": True,
+  "risk_classification_evaluated": True,
+  "metrics_summary": {
+    "random_split_r2": 0.9425,
+    "random_split_mae_hrs": 36.70,
+    "walk_forward_average_mae_hrs": 295.47,
+    "walk_forward_baseline_median_mae_hrs": 194.77,
+    "walk_forward_average_r2": -4.0090,
+    "classification_walk_forward_accuracy": 0.3281,
+    "classification_walk_forward_roc_auc": 0.5351
+  },
+  "recommendation": "Retain Water Pump model strictly for heuristic risk bounds and decision support within CascadeGuard. Do NOT present quantitative RUL predictions as production-grade.",
+  "limitations": [
+    "Dataset represents a single continuous time-series stream without multi-machine entity identifiers (unit_id).",
+    "Non-stationary sensor drift between training periods (April-June) and test periods (July) causes out-of-time degradation.",
+    "Raw sensor telemetry lacks sufficient marginal predictive signal to beat simple median baselines on out-of-time walk-forward validation."
+  ],
+  "future_data_recommendations": [
+    "Multi-machine entity identifiers (unit_id / asset_id)",
+    "Run-to-failure cycle markers and maintenance reset logs",
+    "Pump motor current, vibration FFT spectrum, suction head pressure, and flow rates"
+  ]
+}
+
+decision_file = MODELS_DIR / "water_pump_model_decision.json"
+with open(decision_file, "w") as f:
+    json.dump(decision_json, f, indent=2)
+
+print(f"Final Decision JSON saved to: {decision_file}")
+print("Final Status: DECISION_SUPPORT_ONLY")
+print("=" * 70)

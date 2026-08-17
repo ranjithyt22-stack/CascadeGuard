@@ -1,0 +1,21 @@
+CASCADEGUARD WATER PUMP DATASET INSPECTION REPORT
+=====================================================
+Dataset File: rul_hrs.csv
+Shape: 166,441 rows x 53 columns
+Missing Values: 0
+Duplicate Rows: 0
+
+Asset Identifier Column: None (Unique Units: None)
+Timestamp/Cycle Column: timestamp
+Target Column: rul
+Target RUL Summary (Hours): Min=0.0, Max=837.4833333333333, Mean=288.63, Median=226.25
+
+Numerical ML Features (51): ['Unnamed: 0', 'sensor_00', 'sensor_01', 'sensor_02', 'sensor_03', 'sensor_04', 'sensor_05', 'sensor_06', 'sensor_07', 'sensor_08', 'sensor_09', 'sensor_10', 'sensor_11', 'sensor_12', 'sensor_13', 'sensor_14', 'sensor_16', 'sensor_17', 'sensor_18', 'sensor_19', 'sensor_20', 'sensor_21', 'sensor_22', 'sensor_23', 'sensor_24', 'sensor_25', 'sensor_26', 'sensor_27', 'sensor_28', 'sensor_29', 'sensor_30', 'sensor_31', 'sensor_32', 'sensor_33', 'sensor_34', 'sensor_35', 'sensor_36', 'sensor_37', 'sensor_38', 'sensor_39', 'sensor_40', 'sensor_41', 'sensor_42', 'sensor_43', 'sensor_44', 'sensor_45', 'sensor_46', 'sensor_47', 'sensor_48', 'sensor_49', 'sensor_51']
+Categorical Features (0): []
+Non-Feature Columns (Excluded from X): ['timestamp', 'rul']
+Constant Columns: []
+
+RECOMMENDED ML TASK: Remaining Useful Life (RUL) Regression & Health Index Transformation
+RECOMMENDED MODEL TYPE: XGBoost Regressor / Random Forest Regressor
+CLIMATE SENSITIVITY: Medium-High (Pump motor temperature, head pressure, and flow rates respond to ambient water/air thermal stress)
+SUITABILITY FOR CASCADEGUARD: HIGH — Ideal for predicting water pump degradation in municipal/substation cooling networks.

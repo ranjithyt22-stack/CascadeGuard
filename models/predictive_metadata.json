@@ -1,0 +1,50 @@
+{
+  "15m": {
+    "selected_threshold": 0.1,
+    "validation_metrics": {
+      "precision": 1.0,
+      "recall": 0.0526,
+      "f1": 0.1,
+      "pr_auc": 0.3521,
+      "roc_auc": 0.941
+    },
+    "test_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "test_events": 5
+    }
+  },
+  "30m": {
+    "selected_threshold": 0.1,
+    "validation_metrics": {
+      "precision": 0.5238,
+      "recall": 0.22,
+      "f1": 0.3099,
+      "pr_auc": 0.2705,
+      "roc_auc": 0.8292
+    },
+    "test_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "test_events": 6
+    }
+  },
+  "60m": {
+    "selected_threshold": 0.1,
+    "validation_metrics": {
+      "precision": 0.6875,
+      "recall": 0.1618,
+      "f1": 0.2619,
+      "pr_auc": 0.3431,
+      "roc_auc": 0.7891
+    },
+    "test_metrics": {
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "test_events": 8
+    }
+  }
+}

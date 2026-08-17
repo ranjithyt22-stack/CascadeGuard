@@ -1,0 +1,64 @@
+{
+  "consolidated_comparison": [
+    {
+      "Model": "Baseline Median",
+      "Task": "Regression",
+      "Validation_Method": "Walk-Forward (3-Fold)",
+      "MAE_hours": 194.77,
+      "RMSE_hours": 216.88,
+      "R2_score": -0.3705,
+      "Baseline_Improvement": "0.0% (Baseline)",
+      "Leakage_Status": "LEAKAGE_SAFE"
+    },
+    {
+      "Model": "Baseline Mean",
+      "Task": "Regression",
+      "Validation_Method": "Walk-Forward (3-Fold)",
+      "MAE_hours": 208.8,
+      "RMSE_hours": 232.78,
+      "R2_score": -0.828,
+      "Baseline_Improvement": "-7.2%",
+      "Leakage_Status": "LEAKAGE_SAFE"
+    },
+    {
+      "Model": "XGBoost Regressor (Random Split)",
+      "Task": "Regression",
+      "Validation_Method": "Random Split (80/20)",
+      "MAE_hours": 36.7,
+      "RMSE_hours": 53.91,
+      "R2_score": 0.9425,
+      "Baseline_Improvement": "DECEPTIVE (+81.2%)",
+      "Leakage_Status": "SEVERE_AUTOCORRELATION_LEAKAGE"
+    },
+    {
+      "Model": "HistGradBoosting (Walk-Forward)",
+      "Task": "Regression",
+      "Validation_Method": "Walk-Forward (3-Fold)",
+      "MAE_hours": 295.37,
+      "RMSE_hours": 351.45,
+      "R2_score": -3.988,
+      "Baseline_Improvement": "-51.6% (Fails Baseline)",
+      "Leakage_Status": "LEAKAGE_SAFE"
+    },
+    {
+      "Model": "XGBoost Regressor (Walk-Forward)",
+      "Task": "Regression",
+      "Validation_Method": "Walk-Forward (3-Fold)",
+      "MAE_hours": 295.47,
+      "RMSE_hours": 353.48,
+      "R2_score": -4.009,
+      "Baseline_Improvement": "-51.7% (Fails Baseline)",
+      "Leakage_Status": "LEAKAGE_SAFE"
+    },
+    {
+      "Model": "XGBoost Risk Classifier",
+      "Task": "Multi-Class Classification",
+      "Validation_Method": "Walk-Forward (3-Fold)",
+      "MAE_hours": "N/A (Accuracy: 32.81%)",
+      "RMSE_hours": "N/A (Bal Acc: 25.03%)",
+      "R2_score": "N/A (Macro F1: 0.1790)",
+      "Baseline_Improvement": "N/A (ROC-AUC: 0.5351)",
+      "Leakage_Status": "LEAKAGE_SAFE"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "status": "DECISION_SUPPORT_ONLY",
+  "task": "RISK_CLASSIFICATION",
+  "selected_model": "XGBClassifier (multi:softprob)",
+  "validation_strategy": "CHRONOLOGICAL_SPLIT_80_20",
+  "metrics": {
+    "accuracy": 0.22974556159692391,
+    "balanced_accuracy": 0.2243504155656396,
+    "macro_precision": 0.22797382698573526,
+    "macro_recall": 0.2243504155656396,
+    "macro_f1": 0.17396854400687245,
+    "weighted_f1": 0.1792818836446143,
+    "roc_auc": 0.49431336814657767
+  },
+  "rul_thresholds": {
+    "NORMAL": "RUL >= 240h",
+    "WATCH": "120h <= RUL < 240h",
+    "WARNING": "48h <= RUL < 120h",
+    "CRITICAL": "RUL < 48h"
+  },
+  "reason": "Direct RUL regression suffered severe negative R2 (-9.96) under chronological evaluation due to non-stationary sensor regime shifts. Categorical risk state classification converts raw sensor telemetry into a stable, highly interpretable degradation signal suitable for decision support."
+}

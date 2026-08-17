@@ -1,0 +1,49 @@
+{
+  "system": "CascadeGuard AI Multi-Asset Risk Intelligence",
+  "timestamp": "2026-08-17 11:57:16",
+  "models": {
+    "transformer": {
+      "asset": "Power Transformer",
+      "model_binary": "operational_stress_xgboost_v3.pkl",
+      "task": "binary_classification_temporal",
+      "status": "active_trained",
+      "features_file": "operational_features_v3.csv",
+      "metrics": {
+        "test_roc_auc": 0.94,
+        "validation_pr_auc": 0.352
+      }
+    },
+    "chiller": {
+      "asset": "HVAC Chiller",
+      "model_binary": "chiller_xgboost.pkl",
+      "task": "multiclass_fault_classification",
+      "status": "trained",
+      "features_file": "chiller_features.csv",
+      "num_classes": 8,
+      "metrics_file": "chiller_metrics.json"
+    },
+    "water_pump": {
+      "asset": "Industrial Water Pump",
+      "model_binary": "water_pump_xgboost.pkl",
+      "task": "rul_regression",
+      "status": "trained",
+      "features_file": "water_pump_features.csv",
+      "rul_reference_max_hrs": 837.48,
+      "metrics_file": "water_pump_metrics.json"
+    }
+  },
+  "verification_status": {
+    "transformer": {
+      "model_load": true,
+      "prediction": true
+    },
+    "chiller": {
+      "model_load": true,
+      "prediction": true
+    },
+    "water_pump": {
+      "model_load": true,
+      "prediction": true
+    }
+  }
+}

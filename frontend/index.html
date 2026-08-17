@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CascadeGuard AI - Distributed Multi-Transformer Monitoring Command Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER & FLEET STATUS -->
+    <header>
+        <div>
+            <p class="tag">AI FOR CLIMATE RESILIENCE — MULTI-SITE REGIONAL COMMAND CENTER</p>
+            <h1>CASCADE<span>GUARD</span></h1>
+            <p class="subtitle">
+                Regional Multi-Site Infrastructure Command Center & Climate Resilience Intelligence
+            </p>
+        </div>
+
+        <div class="header-badges">
+            <div class="demo-mode-badge" id="demoModeBadge" title="Demonstration mode utilizing mock industrial telemetry stream">
+                ● MOCK INDUSTRIAL TELEMETRY — DEMONSTRATION ONLY
+            </div>
+            <button id="btnOneClickDemo" class="btn-demo-start" onclick="runOneClickDemoFlow()">
+                🚀 START 1-CLICK DEMO
+            </button>
+            <button class="btn-demo-guide" onclick="toggleDemoGuide()">
+                📋 DEMO GUIDE
+            </button>
+            <div class="status" id="engineStatus">
+                <span></span> REGIONAL COMMAND ONLINE
+            </div>
+            <div class="badge-ew" id="fleetStateBadge">
+                REGIONAL SITES: 5 ACTIVE
+            </div>
+            <div class="badge-trend" id="fleetTrendBadge">
+                MONITORED: MULTI-FACILITY
+            </div>
+        </div>
+    </header>
+
+    <!-- PHASE 15: HACKATHON DEMO GUIDE PANEL -->
+    <div id="demoGuidePanel" class="demo-guide-panel demo-guide-hidden">
+        <div class="demo-guide-header">
+            <h4>📋 HACKATHON PRESENTATION DEMO GUIDE (3–5 MIN WALKTHROUGH)</h4>
+            <button class="demo-guide-close" onclick="toggleDemoGuide()">✖</button>
+        </div>
+        <div class="demo-guide-steps">
+            <div class="demo-step-card" id="demoStep1">
+                <span class="step-num">STEP 1</span>
+                <strong>1. Baseline Infrastructure</strong>
+                <small>Inspect 5 regional facilities & live climate intelligence from Open-Meteo REST API.</small>
+            </div>
+            <div class="demo-step-card" id="demoStep2">
+                <span class="step-num">STEP 2</span>
+                <strong>2. Heatwave Climate Stress</strong>
+                <small>Ambient heatwave stress increases cooling load across regional chiller & transformer assets.</small>
+            </div>
+            <div class="demo-step-card" id="demoStep3">
+                <span class="step-num">STEP 3</span>
+                <strong>3. Chiller Thermal Surge</strong>
+                <small>HVAC Chiller fault probability surges to 98.0% under extreme heat conditions.</small>
+            </div>
+            <div class="demo-step-card" id="demoStep4">
+                <span class="step-num">STEP 4</span>
+                <strong>4. Water Pump Degradation</strong>
+                <small>Water Pump thermal stress elevates (strictly designated DECISION_SUPPORT_ONLY).</small>
+            </div>
+            <div class="demo-step-card" id="demoStep5">
+                <span class="step-num">STEP 5</span>
+                <strong>5. System Cascade Escalation</strong>
+                <small>System Cascade Risk score escalates from LOW to CRITICAL (&gt; 80/100).</small>
+            </div>
+            <div class="demo-step-card" id="demoStep6">
+                <span class="step-num">STEP 6</span>
+                <strong>6. SHAP XAI Attribution</strong>
+                <small>Dynamic SHAP attribution pinpoints top operational & thermal risk drivers in &lt; 10ms.</small>
+            </div>
+            <div class="demo-step-card" id="demoStep7">
+                <span class="step-num">STEP 7</span>
+                <strong>7. Incident Alert & Webhook</strong>
+                <small>Incident Engine triggers active alert, deduplicates event & dispatches webhook notification.</small>
+            </div>
+            <div class="demo-step-card" id="demoStep8">
+                <span class="step-num">STEP 8</span>
+                <strong>8. Executive PDF Report</strong>
+                <small>Download publication-grade executive PDF report with data provenance & engineering actions.</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 14: REGIONAL CRITICAL ALERT BANNER -->
+    <div id="regAlertBanner" class="inc-warning-banner inc-banner-hidden">
+        <span id="regAlertIcon">🚨</span>
+        <strong id="regAlertTitle">REGIONAL CRITICAL ALERT: Elevated multi-site infrastructure risk detected.</strong>
+        <span id="regAlertSubtext">One or more monitored industrial facilities require immediate engineering assessment under climate stress conditions.</span>
+    </div>
+
+    <!-- PHASE 14: REGIONAL COMMAND CENTER KPIS GRID -->
+    <section class="panel regional-command-panel">
+        <div class="panel-header">
+            <div>
+                <h3>🌐 MULTI-SITE REGIONAL INFRASTRUCTURE DASHBOARD</h3>
+                <span class="xai-subtext">Real-Time Regional Risk Aggregation, Priority Facility Ranking & Geographic Intelligence</span>
+            </div>
+            <div class="site-selector-box">
+                <label for="siteSelector"><small style="color:#6a8c80; font-weight:800;">SELECT FACILITY VIEW:</small></label>
+                <select id="siteSelector" onchange="handleSiteSelection(this.value)" class="site-select-dropdown">
+                    <option value="ALL">ALL SITES (REGIONAL VIEW)</option>
+                    <option value="SITE-001">SITE-001 (Coimbatore Industrial Facility)</option>
+                    <option value="SITE-002">SITE-002 (Chennai Industrial Facility)</option>
+                    <option value="SITE-003">SITE-003 (Bengaluru Industrial Facility)</option>
+                    <option value="SITE-004">SITE-004 (Madurai Industrial Facility)</option>
+                    <option value="SITE-005">SITE-005 (Salem Industrial Facility)</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- REGIONAL KPIS -->
+        <div class="inc-kpis-grid">
+            <div class="inc-kpi-card">
+                <small>SITES MONITORED</small>
+                <strong id="regKpiMonitored">5</strong>
+                <span class="inc-kpi-sub">Active Facilities</span>
+            </div>
+            <div class="inc-kpi-card kpi-crit">
+                <small>CRITICAL SITES</small>
+                <strong id="regKpiCritical">0</strong>
+                <span class="inc-kpi-sub">High Priority</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>WARNING SITES</small>
+                <strong id="regKpiWarning">0</strong>
+                <span class="inc-kpi-sub">Elevated Stress</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>REGIONAL CASCADE RISK</small>
+                <strong id="regKpiRisk">-- / 100</strong>
+                <span class="inc-kpi-sub">Weighted Aggregation</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>MOST VULNERABLE SITE</small>
+                <strong id="regKpiVulnSite">--</strong>
+                <span class="inc-kpi-sub" id="regKpiVulnAsset">Priority Focus</span>
+            </div>
+        </div>
+
+        <!-- REGIONAL MAP & SITE CARDS LAYOUT -->
+        <div class="regional-map-layout">
+            <div class="reg-map-container">
+                <small class="inc-box-title">🗺️ REGIONAL GEOGRAPHIC FACILITY RISK MAP (LEAFLET.JS)</small>
+                <div id="regionalMap" style="height: 340px; width: 100%; border-radius: 12px; border: 1px solid #183e33;"></div>
+            </div>
+            <div class="reg-most-vuln-box">
+                <small class="inc-box-title">⚠️ MOST VULNERABLE FACILITY HIGHLIGHT</small>
+                <div id="mostVulnHighlightCard" class="most-vuln-card">
+                    <h4 id="mvSiteName">Coimbatore Industrial Facility</h4>
+                    <span id="mvSiteId" class="prov-badge live-weather">SITE-001</span>
+                    <div class="mv-risk-num" id="mvRiskNum">42.5</div>
+                    <small>SYSTEM CASCADE RISK SCORE</small>
+                    <p id="mvVulnDesc">Primary Vulnerability: <strong>CHILLER</strong> | Status: <strong>WATCH</strong></p>
+                    <div class="mv-provenance">
+                        <small>PROVENANCE: </small>
+                        <span class="prov-badge live-weather">LIVE WEATHER</span>
+                        <span class="prov-badge hist-replay">MOCK OT</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SITE CARDS GRID -->
+        <div style="margin-top: 20px;">
+            <small class="inc-box-title">🏭 MONITORED INDUSTRIAL FACILITIES SUMMARY GRID</small>
+            <div id="siteCardsGrid" class="site-cards-grid">
+                <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- SITE COMPARISON TABLE -->
+        <div style="margin-top: 20px;" class="inc-table-container">
+            <small class="inc-box-title">📊 MULTI-SITE INFRASTRUCTURE COMPARISON MATRIX</small>
+            <table class="inc-table">
+                <thead>
+                    <tr>
+                        <th>PRIORITY RANK</th>
+                        <th>SITE ID & NAME</th>
+                        <th>CITY</th>
+                        <th>CASCADE RISK</th>
+                        <th>STATUS</th>
+                        <th>TRANSFORMER</th>
+                        <th>CHILLER</th>
+                        <th>PUMP (DS)</th>
+                        <th>CLIMATE STRESS</th>
+                        <th>VULNERABILITY</th>
+                        <th>DATA QUALITY</th>
+                        <th>ACTION</th>
+                    </tr>
+                </thead>
+                <tbody id="siteComparisonTableBody">
+                    <tr><td colspan="12" style="text-align: center; color: #6a8c80;">Loading regional site evaluations...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- PHASE 13: LIVE INCIDENT WARNING BANNER -->
+    <div id="incWarningBanner" class="inc-warning-banner inc-banner-hidden">
+        <span id="incBannerIcon">⚠</span>
+        <strong id="incBannerTitle">WARNING: Infrastructure risk requires attention.</strong>
+        <span id="incBannerSubtext">Potential elevated failure risk detected across multi-asset infrastructure.</span>
+    </div>
+
+    <!-- PHASE 13: INCIDENT COMMAND CENTER & DASHBOARD KPIS -->
+    <section class="panel incident-command-panel">
+        <div class="panel-header">
+            <div>
+                <h3>🚨 INCIDENT COMMAND CENTER & AUTOMATED ALERTING</h3>
+                <span class="xai-subtext">Real-Time Infrastructure Incident Detection, Correlation, Risk Thresholding & Executive PDF Reporting</span>
+            </div>
+            <div class="inc-kpi-badge-box">
+                <span id="incKpiDataMode" class="prov-badge pred-sim">DATA MODE: MOCK DEMO</span>
+                <button type="button" class="btn-gen-pdf" onclick="triggerPDFReportDownload()">📄 GENERATE INCIDENT PDF REPORT</button>
+            </div>
+        </div>
+
+        <!-- DASHBOARD KPIS GRID -->
+        <div class="inc-kpis-grid">
+            <div class="inc-kpi-card">
+                <small>ACTIVE INCIDENTS</small>
+                <strong id="incKpiActive">0</strong>
+                <span class="inc-kpi-sub">Open / Acknowledged</span>
+            </div>
+            <div class="inc-kpi-card kpi-crit">
+                <small>CRITICAL INCIDENTS</small>
+                <strong id="incKpiCritical">0</strong>
+                <span class="inc-kpi-sub">High Priority</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>SYSTEM CASCADE RISK</small>
+                <strong id="incKpiSysRisk">-- / 100</strong>
+                <span class="inc-kpi-sub">Composite Score</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>VULNERABLE ASSET</small>
+                <strong id="incKpiVulnAsset">--</strong>
+                <span class="inc-kpi-sub">Priority Focus</span>
+            </div>
+            <div class="inc-kpi-card">
+                <small>CLIMATE STRESS</small>
+                <strong id="incKpiClimate">-- / 100</strong>
+                <span class="inc-kpi-sub">Open-Meteo LIVE</span>
+            </div>
+        </div>
+
+        <!-- ACTIVE INCIDENTS LIST TABLE -->
+        <div class="inc-table-container">
+            <small class="inc-box-title">🚨 ACTIVE & RECENT INFRASTRUCTURE INCIDENTS</small>
+            <table class="inc-table">
+                <thead>
+                    <tr>
+                        <th>INCIDENT ID</th>
+                        <th>SEVERITY</th>
+                        <th>TIMESTAMP</th>
+                        <th>SYSTEM RISK</th>
+                        <th>VULNERABLE ASSET</th>
+                        <th>TRIGGER REASON</th>
+                        <th>STATUS</th>
+                        <th>ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody id="incTableBody">
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #6a8c80;">No active incidents. Infrastructure operating within normal baseline limits.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- SITE CONFIGURATION & INTERACTIVE MAP PANEL (PHASE 11A) -->
+    <section class="panel site-config-panel">
+        <div class="panel-header">
+            <div>
+                <h3>📍 PRECISE INFRASTRUCTURE SITE LOCATION & CONFIGURATION</h3>
+                <span class="xai-subtext">Configure Specific Industrial Site ID, Exact Coordinates & Infrastructure Asset Identifiers</span>
+            </div>
+            <div class="prov-badge live-weather">SITE LOCATION ENGINE</div>
+        </div>
+
+        <!-- SITE ACTIVE BANNER -->
+        <div class="site-active-banner">
+            <div class="site-ban-col">
+                <small>ACTIVE SITE</small>
+                <strong id="hdrSiteName">Coimbatore Industrial Facility</strong>
+            </div>
+            <div class="site-ban-col">
+                <small>SITE ID</small>
+                <strong id="hdrSiteId">SITE-001</strong>
+            </div>
+            <div class="site-ban-col">
+                <small>EXACT COORDINATES</small>
+                <strong id="hdrCoordinates">11.00555° N, 76.96612° E</strong>
+            </div>
+            <div class="site-ban-col">
+                <small>DATA SOURCES</small>
+                <strong class="sys-live">● LIVE Open-Meteo Weather | ● Historical Assets</strong>
+            </div>
+        </div>
+
+        <div class="site-config-layout">
+            <!-- FORM FIELDS -->
+            <div class="site-fields-form">
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="siteInputId">SITE ID</label>
+                        <input type="text" id="siteInputId" value="SITE-001" placeholder="e.g. SITE-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteInputName">SITE NAME</label>
+                        <input type="text" id="siteInputName" value="Coimbatore Industrial Facility" placeholder="e.g. Substation Alpha">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="siteInputSearch">LOCATION SEARCH</label>
+                    <div class="search-input-group">
+                        <input type="text" id="siteInputSearch" value="Coimbatore" placeholder="Search city, area, or facility name...">
+                        <button type="button" class="btn-locate" onclick="locateSite()">🔍 LOCATE SITE</button>
+                    </div>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-group">
+                        <label for="siteInputLat">LATITUDE (-90 to 90)</label>
+                        <input type="number" step="0.00001" id="siteInputLat" value="11.00555" onchange="onCoordsInputChange()">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteInputLon">LONGITUDE (-180 to 180)</label>
+                        <input type="number" step="0.00001" id="siteInputLon" value="76.96612" onchange="onCoordsInputChange()">
+                    </div>
+                </div>
+
+                <div class="form-row-3">
+                    <div class="form-group">
+                        <label for="siteInputTx">TRANSFORMER ID</label>
+                        <input type="text" id="siteInputTx" value="TX-001" placeholder="TX-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteInputCh">CHILLER ID</label>
+                        <input type="text" id="siteInputCh" value="CH-001" placeholder="CH-001">
+                    </div>
+                    <div class="form-group">
+                        <label for="siteInputWp">WATER PUMP ID</label>
+                        <input type="text" id="siteInputWp" value="WP-001" placeholder="WP-001">
+                    </div>
+                </div>
+
+                <button type="button" class="btn-confirm-site" onclick="confirmSite()">
+                    ✓ CONFIRM & SAVE SITE CONFIGURATION
+                </button>
+            </div>
+
+            <!-- LEAFLET INTERACTIVE MAP -->
+            <div class="site-map-box">
+                <div id="siteMapContainer"></div>
+                <span class="map-caption">💡 Drag map marker or edit coordinates to set exact infrastructure location.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 11: CLIMATE INTELLIGENCE & CONFIDENCE LAYER -->
+    <section class="panel climate-intel-panel">
+        <div class="panel-header">
+            <div>
+                <h3>🌡️ CLIMATE INTELLIGENCE & CONFIDENCE LAYER</h3>
+                <span class="xai-subtext">Real-Time Meteorological Intelligence, Heatwave Duration Analysis, Asset Stress Projections & Data Quality</span>
+            </div>
+            <div class="prov-badge live-weather" id="ciStatusBadge">● LIVE — OPEN-METEO API</div>
+        </div>
+
+        <!-- CURRENT WEATHER CARDS -->
+        <div class="ci-weather-grid">
+            <div class="ci-stat-card">
+                <small>AMBIENT TEMP</small>
+                <strong id="ciCurrTemp">-- °C</strong>
+                <span id="ciTempSub">Peak: --</span>
+            </div>
+            <div class="ci-stat-card">
+                <small>RELATIVE HUMIDITY</small>
+                <strong id="ciCurrHum">-- %</strong>
+                <span>Dew Point Stress</span>
+            </div>
+            <div class="ci-stat-card">
+                <small>WIND SPEED</small>
+                <strong id="ciCurrWind">-- km/h</strong>
+                <span>Air Dissipation</span>
+            </div>
+            <div class="ci-stat-card">
+                <small>PRECIPITATION</small>
+                <strong id="ciCurrRain">-- mm</strong>
+                <span>Monsoon Stress</span>
+            </div>
+        </div>
+
+        <!-- HEATWAVE, TREND & DATA QUALITY CARDS -->
+        <div class="ci-insights-grid">
+            <!-- HEATWAVE STATUS -->
+            <div class="ci-insight-card">
+                <div class="ci-card-header">
+                    <small>HEATWAVE DURATION STATUS</small>
+                    <span id="ciHwBadge" class="ma-status-badge">NORMAL</span>
+                </div>
+                <div class="ci-insight-body">
+                    <div class="ci-sub-val">
+                        <span>Peak Temp:</span>
+                        <strong id="ciHwPeak">-- °C</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>Sustained Hot Duration:</span>
+                        <strong id="ciHwDur">0 hrs (≥35°C)</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>Heatwave Severity:</span>
+                        <strong id="ciHwSev">NORMAL</strong>
+                    </div>
+                </div>
+                <small class="ci-disclaimer">Engineering decision-support indicator, NOT official meteorological heatwave declaration.</small>
+            </div>
+
+            <!-- CLIMATE TREND -->
+            <div class="ci-insight-card">
+                <div class="ci-card-header">
+                    <small>CLIMATE STRESS TREND</small>
+                    <span id="ciTrendBadge" class="ma-status-badge">STABLE</span>
+                </div>
+                <div class="ci-insight-body">
+                    <div class="ci-sub-val">
+                        <span>Current Climate Stress:</span>
+                        <strong id="ciCurrStress">-- / 100</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>6-Hour Forecast Δ:</span>
+                        <strong id="ciChg6h">--</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>24-Hour Forecast Δ:</span>
+                        <strong id="ciChg24h">--</strong>
+                    </div>
+                </div>
+                <small class="ci-disclaimer">Calculated from 72h Open-Meteo hourly forecast progression.</small>
+            </div>
+
+            <!-- DATA CONFIDENCE & QUALITY -->
+            <div class="ci-insight-card">
+                <div class="ci-card-header">
+                    <small>DATA QUALITY & CONFIDENCE</small>
+                    <span id="ciConfidenceBadge" class="fresh-pill fresh-live">CONFIDENCE: HIGH</span>
+                </div>
+                <div class="ci-insight-body">
+                    <div class="ci-sub-val">
+                        <span>Climate Source:</span>
+                        <strong id="ciProvider">Open-Meteo (LIVE)</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>Freshness Status:</span>
+                        <strong id="ciFreshness">LIVE (< 60s)</strong>
+                    </div>
+                    <div class="ci-sub-val">
+                        <span>Asset Limits:</span>
+                        <strong style="color: #c870ff;">Replay / Dataset Provenance</strong>
+                    </div>
+                </div>
+                <small class="ci-disclaimer">Asset datasets maintain historical replay and decision-support status.</small>
+            </div>
+        </div>
+
+        <!-- ASSET CLIMATE IMPACT GRID -->
+        <div class="ci-asset-impacts-box">
+            <small class="ci-box-title">ASSET-SPECIFIC CLIMATE IMPACT ESTIMATES</small>
+            <div class="ci-asset-cards-grid">
+                <div class="ci-asset-card">
+                    <div class="ci-ac-header">
+                        <strong>⚡ POWER TRANSFORMER</strong>
+                        <span id="ciTxSev" class="fresh-pill fresh-hist">LOW</span>
+                    </div>
+                    <div class="ci-ac-score" id="ciTxScore">-- / 100</div>
+                    <p id="ciTxFactors" class="ci-ac-desc">Evaluating thermal stress factors...</p>
+                </div>
+
+                <div class="ci-asset-card">
+                    <div class="ci-ac-header">
+                        <strong>❄️ HVAC CHILLER</strong>
+                        <span id="ciChSev" class="fresh-pill fresh-hist">LOW</span>
+                    </div>
+                    <div class="ci-ac-score" id="ciChScore">-- / 100</div>
+                    <p id="ciChFactors" class="ci-ac-desc">Evaluating condenser heat rejection stress...</p>
+                </div>
+
+                <div class="ci-asset-card">
+                    <div class="ci-ac-header">
+                        <strong>💧 WATER PUMP</strong>
+                        <span id="ciWpSev" class="fresh-pill fresh-ds">MEDIUM</span>
+                    </div>
+                    <div class="ci-ac-score" id="ciWpScore">-- / 100 (DS)</div>
+                    <p id="ciWpFactors" class="ci-ac-desc">Decision-support environmental stress evaluation...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOURLY FORECAST VISUALIZATION CHART -->
+        <div class="ci-forecast-chart-box">
+            <small class="ci-box-title">📊 72-HOUR CLIMATE STRESS & TEMPERATURE FORECAST</small>
+            <div id="ciHourlyBarsContainer" class="ci-hourly-grid">
+                <!-- Dynamically populated hourly bars -->
+            </div>
+        </div>
+
+        <!-- DYNAMIC EXPLANATIONS BOX -->
+        <div class="ci-explanations-box">
+            <div class="ci-exp-title">WHY IS CLIMATE STRESS ELEVATED?</div>
+            <ul id="ciExplanationsList" class="ci-exp-list">
+                <li>Evaluating real-time weather parameters...</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- PHASE 12: REAL-TIME INDUSTRIAL OT TELEMETRY CONTROL CENTER -->
+    <section class="panel ot-telemetry-panel">
+        <div class="panel-header">
+            <div>
+                <h3>⚡ REAL-TIME INDUSTRIAL OT CONNECTIVITY & TELEMETRY CONTROL CENTER</h3>
+                <span class="xai-subtext">Industrial SCADA/BMS/IoT Protocol Adapters (Modbus TCP, OPC-UA, MQTT) & Physically Plausible Simulation Engine</span>
+            </div>
+            <div class="ot-mode-badge-box">
+                <span id="otModeDisplay" class="prov-badge live-weather">DATA MODE: MOCK DEMO MODE</span>
+                <button type="button" class="btn-toggle-ot" onclick="toggleTelemetryMode()">🔄 TOGGLE MODE (MOCK / REAL OT)</button>
+            </div>
+        </div>
+
+        <!-- TELEMETRY CONTROLS & SCENARIOS -->
+        <div class="ot-controls-bar">
+            <div class="ot-scenarios-row">
+                <small class="ot-lbl">MOCK TELEMETRY SCENARIO:</small>
+                <button class="btn-ot-scen active" onclick="setTelemetryScenario('NORMAL', this)">🟢 NORMAL</button>
+                <button class="btn-ot-scen" onclick="setTelemetryScenario('HIGH_LOAD', this)">⚡ HIGH LOAD</button>
+                <button class="btn-ot-scen" onclick="setTelemetryScenario('HEAT_STRESS', this)">🔥 HEAT STRESS</button>
+                <button class="btn-ot-scen" onclick="setTelemetryScenario('CHILLER_OVERLOAD', this)">❄️ CHILLER OVERLOAD</button>
+                <button class="btn-ot-scen" onclick="setTelemetryScenario('PUMP_DEGRADATION', this)">💧 PUMP DEGRADATION</button>
+                <button class="btn-ot-scen btn-ot-danger" onclick="setTelemetryScenario('COMBINED_CASCADE', this)">💥 COMBINED CASCADE</button>
+            </div>
+            <div class="ot-actions-row">
+                <button type="button" class="btn-ot-act btn-primary" onclick="startLiveOTStream()">▶ START LIVE STREAM</button>
+                <button type="button" class="btn-ot-act btn-danger" onclick="stopLiveOTStream()">⏸ STOP</button>
+                <button type="button" class="btn-ot-act btn-secondary" onclick="refreshLiveOTTelemetry()">🔄 REFRESH NOW</button>
+            </div>
+        </div>
+
+        <!-- REALTIME ASSET TELEMETRY CARDS -->
+        <div class="ot-asset-telemetry-grid">
+            <!-- TRANSFORMER OT CARD -->
+            <div class="ot-asset-card">
+                <div class="ot-ac-header">
+                    <strong>⚡ POWER TRANSFORMER (TX-001)</strong>
+                    <span id="otTxConn" class="fresh-pill fresh-live">SIMULATED</span>
+                </div>
+                <div class="ot-ac-meta">
+                    <small>Source: <span id="otTxSrc">mock_telemetry</span></small> |
+                    <small>Freshness: <span id="otTxFresh">RECENT</span></small>
+                </div>
+                <div class="ot-metrics-subgrid">
+                    <div class="ot-metric"><small>OTI (Oil Temp)</small><strong id="otTxOTI">-- °C</strong></div>
+                    <div class="ot-metric"><small>WTI (Winding Temp)</small><strong id="otTxWTI">-- °C</strong></div>
+                    <div class="ot-metric"><small>ATI (Ambient Temp)</small><strong id="otTxATI">-- °C</strong></div>
+                    <div class="ot-metric"><small>OLI (Oil Level)</small><strong id="otTxOLI">-- %</strong></div>
+                    <div class="ot-metric"><small>ACTIVE POWER</small><strong id="otTxKW">-- kW</strong></div>
+                    <div class="ot-metric"><small>VOLTAGE VL1</small><strong id="otTxVL1">-- kV</strong></div>
+                </div>
+            </div>
+
+            <!-- CHILLER OT CARD -->
+            <div class="ot-asset-card">
+                <div class="ot-ac-header">
+                    <strong>❄️ HVAC CHILLER (CH-001)</strong>
+                    <span id="otChConn" class="fresh-pill fresh-live">SIMULATED</span>
+                </div>
+                <div class="ot-ac-meta">
+                    <small>Source: <span id="otChSrc">mock_telemetry</span></small> |
+                    <small>Freshness: <span id="otChFresh">RECENT</span></small>
+                </div>
+                <div class="ot-metrics-subgrid">
+                    <div class="ot-metric"><small>TEI (Evap In)</small><strong id="otChTEI">-- °C</strong></div>
+                    <div class="ot-metric"><small>TEO (Evap Out)</small><strong id="otChTEO">-- °C</strong></div>
+                    <div class="ot-metric"><small>TCI (Cond In)</small><strong id="otChTCI">-- °C</strong></div>
+                    <div class="ot-metric"><small>TCO (Cond Out)</small><strong id="otChTCO">-- °C</strong></div>
+                    <div class="ot-metric"><small>CHILLER POWER</small><strong id="otChKW">-- kW</strong></div>
+                    <div class="ot-metric"><small>COP / EFF</small><strong>97.64% XGB</strong></div>
+                </div>
+            </div>
+
+            <!-- WATER PUMP OT CARD -->
+            <div class="ot-asset-card">
+                <div class="ot-ac-header">
+                    <strong>💧 WATER PUMP (WP-001)</strong>
+                    <span id="otWpConn" class="fresh-pill fresh-ds">DECISION SUPPORT</span>
+                </div>
+                <div class="ot-ac-meta">
+                    <small>Source: <span id="otWpSrc">mock_telemetry</span></small> |
+                    <small>Freshness: <span id="otWpFresh">RECENT</span></small>
+                </div>
+                <div class="ot-metrics-subgrid">
+                    <div class="ot-metric"><small>COOLING FLOW</small><strong id="otWpFlow">-- L/m</strong></div>
+                    <div class="ot-metric"><small>PRESSURE</small><strong id="otWpPress">-- bar</strong></div>
+                    <div class="ot-metric"><small>MOTOR TEMP</small><strong id="otWpMotorT">-- °C</strong></div>
+                    <div class="ot-metric"><small>VIBRATION</small><strong id="otWpVib">-- mm/s</strong></div>
+                    <div class="ot-metric"><small>MODEL STATUS</small><strong style="color: #c870ff;">DECISION_SUPPORT</strong></div>
+                    <div class="ot-metric"><small>DATA PROVENANCE</small><strong>SIMULATED</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DEMO CASCADE FLOW DISPLAY -->
+        <div class="ot-cascade-demo-box">
+            <div class="ot-cd-header">
+                <strong>🔄 MULTI-ASSET SCENARIO CASCADE PROPAGATION FLOW</strong>
+                <span class="flow-notice">ENGINEERING SCENARIO — NOT PROVEN CAUSALITY</span>
+            </div>
+            <p id="otCascadeNarrative" class="ot-cd-narrative">
+                Select an OT simulation scenario above to observe real-time telemetry propagation across Pump, Chiller, Transformer, and System Cascade Risk.
+            </p>
+        </div>
+    </section>
+
+    <!-- FLEET SUMMARY HEADER GRID -->
+    <section class="fleet-summary-grid">
+        <div class="flt-col">
+            <small>MONITORED</small>
+            <strong id="fltTotalMonitored">5</strong>
+            <span>Virtual Assets</span>
+        </div>
+        <div class="flt-col col-normal">
+            <small>NORMAL</small>
+            <strong id="fltNormalCount">--</strong>
+            <span>Low Risk</span>
+        </div>
+        <div class="flt-col col-watch">
+            <small>WATCH</small>
+            <strong id="fltWatchCount">--</strong>
+            <span>Moderate Risk</span>
+        </div>
+        <div class="flt-col col-warning">
+            <small>WARNING</small>
+            <strong id="fltWarningCount">--</strong>
+            <span>High Risk</span>
+        </div>
+        <div class="flt-col col-critical">
+            <small>CRITICAL</small>
+            <strong id="fltCriticalCount">--</strong>
+            <span>Urgent Action</span>
+        </div>
+        <div class="flt-col">
+            <small>AVERAGE FLEET RISK</small>
+            <strong id="fltAvgRisk">-- / 100</strong>
+            <span id="fltAvgRiskLevel">--</span>
+        </div>
+        <div class="flt-col col-highest">
+            <small>HIGHEST RISK TX</small>
+            <strong id="fltHighestRisk">--</strong>
+            <span id="fltHighestRiskScore">Score: --</span>
+        </div>
+    </section>
+
+    <!-- FLEET CONTROLS & DATA PROVENANCE -->
+    <section class="control-panel">
+        <div class="control-header">
+            <label>Fleet Monitoring Controls & Data Provenance</label>
+            <div class="provenance-badges">
+                <span class="prov-badge live-weather">LIVE WEATHER FORECAST</span>
+                <span class="prov-badge hist-replay">HISTORICAL TELEMETRY REPLAY</span>
+                <span class="prov-badge pred-sim">PREDICTIVE AI FORECAST</span>
+                <span class="prov-badge sim-scenario">VIRTUAL DEMO FLEET</span>
+            </div>
+        </div>
+
+        <div class="input-row">
+            <button id="btnFleetAnalyze" onclick="analyzeNextFleetSample()" class="btn-primary">
+                ANALYZE FLEET STEP
+            </button>
+            <button id="btnStartFleet" onclick="startFleetMonitoring()" class="btn-success">
+                START FLEET MONITORING
+            </button>
+            <button id="btnStopFleet" onclick="stopFleetMonitoring()" class="btn-danger" disabled>
+                STOP FLEET MONITORING
+            </button>
+            <button id="btnResetFleet" onclick="resetFleetReplay()" class="btn-secondary">
+                RESET FLEET REPLAY
+            </button>
+            <button id="btnExportFleet" onclick="exportFleetReport()" class="btn-export">
+                📥 EXPORT FLEET REPORT
+            </button>
+        </div>
+
+        <div class="telemetry-status-panel">
+            <div class="status-col">
+                <small>CLIMATE API</small>
+                <strong class="sys-live">🟢 Open-Meteo (LIVE)</strong>
+            </div>
+            <div class="status-col">
+                <small>TRANSFORMER ADAPTER</small>
+                <strong id="txAdapterStatus">Historical Replay</strong>
+            </div>
+            <div class="status-col">
+                <small>CHILLER ADAPTER</small>
+                <strong id="chAdapterStatus">Historical Dataset</strong>
+            </div>
+            <div class="status-col">
+                <small>WATER PUMP ADAPTER</small>
+                <strong id="wpAdapterStatus" class="status-paused">Dataset (Decision Support)</strong>
+            </div>
+        </div>
+
+        <!-- PHASE 10 ADAPTER FRESHNESS BAR -->
+        <div class="adapter-freshness-bar">
+            <span>🔌 API ADAPTER ARCHITECTURE:</span>
+            <span class="fresh-pill fresh-live">CLIMATE: LIVE API</span>
+            <span class="fresh-pill fresh-hist">TRANSFORMER: HISTORICAL REPLAY</span>
+            <span class="fresh-pill fresh-hist">CHILLER: HISTORICAL DATASET</span>
+            <span class="fresh-pill fresh-ds">WATER PUMP: DATASET (DECISION SUPPORT ONLY)</span>
+            <span id="freshnessTimestamp" style="margin-left: auto; color: var(--accent-cyan); font-size: 0.82rem;">Updated: Just Now</span>
+        </div>
+    </section>
+
+    <!-- MULTI-ASSET CASCADE OVERVIEW PANEL (PHASE 9) -->
+    <section class="panel multi-asset-panel">
+        <div class="panel-header">
+            <div>
+                <h3>🌐 MULTI-INFRASTRUCTURE CASCADE RISK INTELLIGENCE</h3>
+                <span class="xai-subtext">Integrated Decision Support: Power Transformer ➔ HVAC Chiller ➔ Cooling Water Pump</span>
+            </div>
+            <div class="prov-badge sim-scenario">ENGINEERING DEPENDENCY SCENARIO</div>
+        </div>
+
+        <!-- 3 ASSET RISK CARDS -->
+        <div class="multi-asset-cards-grid">
+            <!-- TRANSFORMER CARD -->
+            <div class="ma-card ma-tx">
+                <div class="ma-card-header">
+                    <small>ASSET 1 — POWER TRANSFORMER</small>
+                    <span class="ma-source-badge">ML PRODUCTION</span>
+                </div>
+                <div class="ma-card-body">
+                    <div class="ma-risk-val" id="maTxRisk">-- / 100</div>
+                    <div class="ma-status-badge" id="maTxStatus">NORMAL</div>
+                </div>
+                <div class="ma-card-footer">
+                    <small>Substation Thermal & Load Risk</small>
+                    <span>Confidence: <strong class="conf-high">HIGH (95%)</strong></span>
+                </div>
+            </div>
+
+            <!-- CHILLER CARD -->
+            <div class="ma-card ma-ch">
+                <div class="ma-card-header">
+                    <small>ASSET 2 — HVAC CHILLER</small>
+                    <span class="ma-source-badge">ML PRODUCTION</span>
+                </div>
+                <div class="ma-card-body">
+                    <div class="ma-risk-val" id="maChRisk">-- / 100</div>
+                    <div class="ma-status-badge" id="maChStatus">NORMAL</div>
+                </div>
+                <div class="ma-card-footer">
+                    <small id="maChFault">Fault Mode: Normal Operation</small>
+                    <span>Confidence: <strong class="conf-high">HIGH (97%)</strong></span>
+                </div>
+            </div>
+
+            <!-- WATER PUMP CARD -->
+            <div class="ma-card ma-wp">
+                <div class="ma-card-header">
+                    <small>ASSET 3 — WATER PUMP</small>
+                    <span class="ma-source-badge badge-ds">DECISION SUPPORT ONLY</span>
+                </div>
+                <div class="ma-card-body">
+                    <div class="ma-risk-val" id="maWpRisk">-- / 100</div>
+                    <div class="ma-status-badge badge-ds" id="maWpStatus">DECISION SUPPORT</div>
+                </div>
+                <div class="ma-card-footer">
+                    <small id="maWpWarn">Signal for decision support only</small>
+                    <span>Confidence: <strong class="conf-low">LOW (Heuristic Bounds)</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SYSTEM CASCADE RISK CENTRAL SCORE & VULNERABILITY -->
+        <div class="multi-asset-system-grid">
+            <div class="ma-sys-score-box">
+                <small>SYSTEM CASCADE RISK SCORE</small>
+                <div class="ma-sys-risk" id="maSysRisk">-- / 100</div>
+                <div class="ma-sys-level" id="maSysLevel">SYSTEM NORMAL</div>
+                <p class="ma-sys-sub">0.80 × Asset Risk + 0.20 × Climate Stress</p>
+            </div>
+
+            <div class="ma-sys-vulnerability-box">
+                <div class="vulner-header">
+                    <small>MOST VULNERABLE ASSET</small>
+                    <strong id="maVulnerAsset">HVAC CHILLER</strong>
+                </div>
+                <p id="maCascadeNarrative" class="vulner-text">Evaluating multi-asset scenario dependency graph...</p>
+                <div class="scenario-graph-visual">
+                    <div class="graph-node">WATER PUMP</div>
+                    <div class="graph-arrow">➔</div>
+                    <div class="graph-node">CHILLER</div>
+                    <div class="graph-arrow">➔</div>
+                    <div class="graph-node">TRANSFORMER</div>
+                </div>
+                <span class="graph-caption">Engineering Scenario Dependency Flow</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 11: CLIMATE WHAT-IF SIMULATOR & MULTI-ASSET CASCADE -->
+    <section class="panel simulator-panel">
+        <div class="panel-header">
+            <div>
+                <h3>🌡️ CLIMATE STRESS WHAT-IF SIMULATOR</h3>
+                <span class="xai-subtext">Interactive Engineering Simulation: Model System Risk Propagation Under Extreme Weather Scenarios</span>
+            </div>
+            <div class="prov-badge sim-scenario">SCENARIO SIMULATION MODE</div>
+        </div>
+
+        <!-- SCENARIO SELECTOR BUTTONS -->
+        <div class="scenario-buttons-grid">
+            <button class="btn-scenario active" onclick="runClimateScenario('NORMAL', this)">🟢 CURRENT CONDITIONS</button>
+            <button class="btn-scenario" onclick="runClimateScenario('HEATWAVE', this)">☀️ HEATWAVE (+6.5°C)</button>
+            <button class="btn-scenario" onclick="runClimateScenario('EXTREME_HEAT', this)">🔥 EXTREME HEAT (>46°C)</button>
+            <button class="btn-scenario" onclick="runClimateScenario('HIGH_HUMIDITY', this)">🌫️ HIGH HUMIDITY (95%)</button>
+            <button class="btn-scenario" onclick="runClimateScenario('HEAVY_RAIN', this)">🌧️ HEAVY MONSOON</button>
+            <button class="btn-scenario" onclick="runClimateScenario('COOLING_FAILURE', this)">❄️ CHILLER RESTRICTION</button>
+            <button class="btn-scenario" onclick="runClimateScenario('PUMP_DEGRADATION', this)">💧 PUMP FLOW DROP</button>
+            <button class="btn-scenario btn-combined" onclick="runClimateScenario('COMBINED_CASCADE', this)">💥 COMBINED CASCADE</button>
+        </div>
+
+        <!-- RISK DELTA METRICS CARDS -->
+        <div class="scenario-metrics-grid">
+            <div class="scen-card">
+                <small>BASELINE SYSTEM RISK</small>
+                <div class="scen-val" id="scenBaseRisk">-- / 100</div>
+                <span>Live Weather API Baseline</span>
+            </div>
+            <div class="scen-card">
+                <small>SCENARIO SYSTEM RISK</small>
+                <div class="scen-val scen-active" id="scenSimRisk">-- / 100</div>
+                <span id="scenLevelTag" class="ma-status-badge">NORMAL</span>
+            </div>
+            <div class="scen-card">
+                <small>SYSTEM RISK CHANGE (Δ)</small>
+                <div class="scen-val scen-delta" id="scenDelta">--</div>
+                <span>Engineering Scenario Impact</span>
+            </div>
+        </div>
+
+        <!-- MULTI-ASSET CASCADE ANIMATED FLOW VISUAL -->
+        <div class="cascade-flow-panel">
+            <div class="flow-title">
+                <small>ENGINEERING SCENARIO CASCADE PROPAGATION</small>
+                <span class="flow-notice">SCENARIO SIMULATION — NOT OBSERVED FAILURE</span>
+            </div>
+            <div class="cascade-flow-diagram">
+                <div class="flow-node node-climate">
+                    <span class="node-icon">☀️</span>
+                    <strong>CLIMATE STRESS</strong>
+                    <small id="fnClimate">-- / 100</small>
+                </div>
+                <div class="flow-connector">➔</div>
+                <div class="flow-branch">
+                    <div class="flow-node node-pump">
+                        <span class="node-icon">💧</span>
+                        <strong>WATER PUMP</strong>
+                        <small id="fnPump">-- / 100 (DS)</small>
+                    </div>
+                    <div class="flow-node node-chiller">
+                        <span class="node-icon">❄️</span>
+                        <strong>HVAC CHILLER</strong>
+                        <small id="fnChiller">-- / 100</small>
+                    </div>
+                </div>
+                <div class="flow-connector">➔</div>
+                <div class="flow-node node-tx">
+                    <span class="node-icon">⚡</span>
+                    <strong>POWER TRANSFORMER</strong>
+                    <small id="fnTx">-- / 100</small>
+                </div>
+                <div class="flow-connector">➔</div>
+                <div class="flow-node node-system">
+                    <span class="node-icon">🛡️</span>
+                    <strong>SYSTEM RISK</strong>
+                    <small id="fnSystem">-- / 100</small>
+                </div>
+            </div>
+            <p id="scenRecommendationText" class="scen-rec-box">Select a scenario above to model cascade risk propagation.</p>
+        </div>
+
+        <!-- SCENARIO COMPARISON BAR CHART -->
+        <div class="scenario-chart-box">
+            <div class="panel-header" style="margin-bottom: 10px;">
+                <h4>📊 SCENARIO RISK COMPARISON CHART</h4>
+                <small style="color: var(--text-muted);">Comparing System Cascade Risk across all 8 Climate Scenarios</small>
+            </div>
+            <div id="scenarioBarsContainer" class="scenario-bars-grid">
+                <!-- Dynamically populated scenario comparison bars -->
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP PRIORITY PANEL -->
+    <section id="topPriorityPanel" class="panel priority-panel">
+        <div class="priority-header">
+            <div>
+                <span class="priority-tag">🚨 HIGHEST PRIORITY TRANSFORMER ALERT</span>
+                <h2 id="prioTxName">TX-003 — Generation Plant TX-3</h2>
+                <p id="prioTxLoc" class="prio-sub">Location: Madurai | Priority Rank #1</p>
+            </div>
+            <div class="prio-scores">
+                <div class="prio-score-col">
+                    <small>CURRENT RISK</small>
+                    <strong id="prioCurrentScore">--</strong>
+                </div>
+                <div class="prio-score-col">
+                    <small>60-MIN FORECAST</small>
+                    <strong id="prioForecastScore">--</strong>
+                </div>
+                <div class="prio-score-col">
+                    <small>EARLY WARNING</small>
+                    <span id="prioEarlyWarning" class="hz-level">NORMAL</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="prio-body">
+            <div class="prio-col">
+                <small>PRIMARY RISK SIGNAL (SHAP)</small>
+                <strong id="prioRiskFactor">Evaluating...</strong>
+            </div>
+            <div class="prio-col">
+                <small>RECOMMENDED ENGINEERING ACTION</small>
+                <p id="prioActionText">Run fleet analysis to generate priority decision support.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRANSFORMER FLEET TABLE -->
+    <section class="panel fleet-table-panel">
+        <div class="panel-header">
+            <h3>📋 TRANSFORMER FLEET RISK MONITORING TABLE</h3>
+            <span class="xai-subtext">Click any row to inspect deep-dive SHAP factors & forecasts</span>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="fleet-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>ID</th>
+                        <th>Transformer Name</th>
+                        <th>Location</th>
+                        <th>Health Risk</th>
+                        <th>Op Risk</th>
+                        <th>Climate Stress</th>
+                        <th>Current Risk</th>
+                        <th>60-min Risk</th>
+                        <th>Trend</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="fleetTableBody">
+                    <tr><td colspan="12" class="placeholder-text">Click "START FLEET MONITORING" to populate real-time fleet table.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FLEET RISK HEATMAP CARDS -->
+    <section class="panel">
+        <div class="panel-header">
+            <h3>🔥 FLEET RISK HEATMAP CARDS</h3>
+            <span class="xai-subtext">Real-time status glow indicators</span>
+        </div>
+        <div id="fleetHeatmapGrid" class="fleet-heatmap-grid">
+            <!-- Cards rendered dynamically -->
+        </div>
+    </section>
+
+    <!-- MULTI-LINE FLEET TREND CHART -->
+    <section class="panel chart-panel">
+        <div class="chart-header">
+            <h3>📈 FLEET RISK TRAJECTORIES (MULTI-TRANSFORMER COMPARISON)</h3>
+            <div id="chartToggles" class="chart-toggles">
+                <!-- Checkboxes rendered dynamically -->
+            </div>
+        </div>
+        <div class="canvas-wrapper">
+            <canvas id="fleetTrendChart" height="180"></canvas>
+        </div>
+    </section>
+
+    <!-- CLIMATE OVERVIEW GRID -->
+    <section class="panel">
+        <div class="panel-header">
+            <h3>🌦 CLIMATE STRESS OVERVIEW BY TRANSFORMER LOCATION</h3>
+            <span class="xai-subtext">Live Open-Meteo Weather API Forecast</span>
+        </div>
+        <div id="climateFleetGrid" class="climate-fleet-grid">
+            <!-- Climate cards rendered dynamically -->
+        </div>
+    </section>
+
+    <!-- TRANSFORMER DETAIL VIEW MODAL -->
+    <div id="detailModal" class="modal-backdrop hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div>
+                    <span id="dtlTxId" class="priority-tag">TX-003</span>
+                    <h2 id="dtlTxName">Generation Plant TX-3</h2>
+                    <p id="dtlTxLoc" class="prio-sub">Location: Madurai</p>
+                </div>
+                <button onclick="closeTransformerDetail()" class="modal-close-btn">✕</button>
+            </div>
+
+            <div class="modal-body">
+                <!-- Data Provenance Bar -->
+                <div class="modal-provenance">
+                    <span class="prov-badge live-weather">LIVE WEATHER</span>
+                    <span class="prov-badge hist-replay">HISTORICAL TELEMETRY REPLAY</span>
+                    <span class="prov-badge pred-sim">PREDICTIVE SIMULATION</span>
+                    <span id="dtlScenarioBadge" class="prov-badge sim-scenario">SCENARIO: NORMAL</span>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="modal-metrics-grid">
+                    <div class="modal-metric-card">
+                        <small>CURRENT CASCADE RISK</small>
+                        <strong id="dtlCascadeScore">-- / 100</strong>
+                        <span id="dtlCascadeLevel" class="hz-level">LOW</span>
+                    </div>
+                    <div class="modal-metric-card">
+                        <small>HEALTH RISK</small>
+                        <strong id="dtlHealthRisk">--</strong>
+                        <span id="dtlHealthIdx">Index: --</span>
+                    </div>
+                    <div class="modal-metric-card">
+                        <small>OPERATIONAL RISK</small>
+                        <strong id="dtlOpRisk">-- %</strong>
+                        <span>XGBoost V3</span>
+                    </div>
+                    <div class="modal-metric-card">
+                        <small>CLIMATE STRESS</small>
+                        <strong id="dtlClimateStress">--</strong>
+                        <span id="dtlPeakTime">Peak: --</span>
+                    </div>
+                </div>
+
+                <!-- Multi-Horizon Forecast Box -->
+                <div class="modal-section">
+                    <h4>🔮 MULTI-HORIZON PREDICTIVE FORECAST</h4>
+                    <div class="cards pred-cards">
+                        <div class="card card-horizon horizon-now">
+                            <p>CURRENT</p>
+                            <h2 id="dtlNowScore">--</h2>
+                            <span id="dtlNowLevel" class="hz-level">LOW</span>
+                        </div>
+                        <div class="card card-horizon horizon-15m">
+                            <p>+15 MIN</p>
+                            <h2 id="dtl15mScore">--</h2>
+                            <span id="dtl15mLevel" class="hz-level">LOW</span>
+                            <small id="dtl15mProb" class="hz-prob">Prob: --%</small>
+                        </div>
+                        <div class="card card-horizon horizon-30m">
+                            <p>+30 MIN</p>
+                            <h2 id="dtl30mScore">--</h2>
+                            <span id="dtl30mLevel" class="hz-level">LOW</span>
+                            <small id="dtl30mProb" class="hz-prob">Prob: --%</small>
+                        </div>
+                        <div class="card card-horizon horizon-60m">
+                            <p>+60 MIN</p>
+                            <h2 id="dtl60mScore">--</h2>
+                            <span id="dtl60mLevel" class="hz-level">LOW</span>
+                            <small id="dtl60mProb" class="hz-prob">Prob: --%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SHAP Explainability -->
+                <div class="modal-section">
+                    <h4>🔍 WHY THIS RISK? (TOP SHAP FACTORS)</h4>
+                    <div id="dtlShapContainer" class="top-factors-list"></div>
+                </div>
+
+                <!-- Decision Support -->
+                <div class="modal-section">
+                    <h4>🤖 ENGINEERING DECISION SUPPORT</h4>
+                    <div class="ai-assessment-box">
+                        <p id="dtlRecommendation">Loading recommendation...</p>
+                        <small id="dtlDisclaimer" style="margin-top:8px; display:block; color:#5a7d71;">
+                            AI-assisted decision support for utility operators, not autonomous grid control commands.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <span>CASCADEGUARD AI COMMAND CENTER</span>
+        <span>Distributed Multi-Transformer Risk Intelligence & Predictive Forecasting</span>
+    </footer>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
