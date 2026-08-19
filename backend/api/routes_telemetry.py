@@ -156,6 +156,16 @@ def get_v1_devices():
         "devices": state.device_registry.get_all_devices()
     }
 
+@router.get("/v1/debug-state")
+def get_v1_debug_state():
+    import sys
+    import state
+    return {
+        "state_id": id(state),
+        "device_registry_exists": state.device_registry is not None,
+        "sys_modules_keys": [k for k in sys.modules.keys() if "state" in k]
+    }
+
 @router.get("/v1/devices/{device_id}")
 def get_v1_device_by_id(device_id: str = Path(...)):
     dev = state.device_registry.get_device(device_id)
