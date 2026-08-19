@@ -15,19 +15,19 @@ history_lock = threading.Lock()
 # Standard operating bounds
 OPERATING_BOUNDS = {
     "transformer": {
-        "oil_temperature": (-40.0, 150.0),
-        "winding_temperature": (-40.0, 160.0),
+        "OTI": (-40.0, 150.0),
+        "WTI": (-40.0, 160.0),
         "load_percent": (0.0, 300.0),
         "current": (0.0, 5000.0),
         "voltage": (0.0, 50000.0),
-        "power_factor": (0.0, 1.0)
+        "power": (0.0, 10000.0)
     },
     "chiller": {
         "compressor_current": (0.0, 1000.0),
-        "compressor_power": (0.0, 5000.0),
+        "kW": (0.0, 5000.0),
         "cooling_load": (0.0, 100.0),
-        "supply_temperature": (-30.0, 80.0),
-        "return_temperature": (-30.0, 80.0),
+        "TEO": (-30.0, 80.0),
+        "TEI": (-30.0, 80.0),
         "condenser_temperature": (-30.0, 100.0),
         "evaporator_temperature": (-30.0, 80.0),
         "flow_rate": (0.0, 1000.0),
@@ -38,17 +38,17 @@ OPERATING_BOUNDS = {
         "motor_power": (0.0, 1000.0),
         "motor_temperature": (-40.0, 180.0),
         "vibration": (0.0, 20.0),
-        "flow_rate": (0.0, 1000.0),
+        "flow": (0.0, 1000.0),
         "pressure": (0.0, 50.0),
         "rpm": (0.0, 10000.0),
         "efficiency": (0.0, 100.0)
     },
     "environment": {
-        "outdoor_temperature": (-50.0, 65.0),
+        "temperature": (-50.0, 65.0),
         "humidity": (0.0, 100.0),
         "pressure": (800.0, 1200.0),
-        "rainfall": (0.0, 500.0),
-        "wind_speed": (0.0, 250.0),
+        "rain": (0.0, 500.0),
+        "wind": (0.0, 250.0),
         "solar_radiation": (0.0, 2000.0),
         "dew_point": (-50.0, 65.0)
     }

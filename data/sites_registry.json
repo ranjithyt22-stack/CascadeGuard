@@ -81,7 +81,7 @@
     },
     "timezone": "Asia/Kolkata",
     "status": "ACTIVE",
-    "telemetry_mode": "MOCK"
+    "telemetry_mode": "HYBRID"
   },
   {
     "site_id": "TRY-001",

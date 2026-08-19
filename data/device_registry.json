@@ -8,7 +8,7 @@
     "protocol": "mqtt",
     "status": "ONLINE",
     "telemetry_frequency": 5,
-    "last_seen": "2026-08-19 23:43:53",
+    "last_seen": "2026-08-19 23:45:22",
     "sensors": [
       "oil_temperature",
       "winding_temperature",
@@ -55,13 +55,14 @@
     "location": "CBE-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "OFFLINE",
+    "status": "ONLINE",
     "telemetry_frequency": 10,
-    "last_seen": "",
+    "last_seen": "2026-08-19 23:45:22",
     "sensors": [
       "outdoor_temperature",
       "humidity"
-    ]
+    ],
+    "signal_quality": 100
   },
   {
     "device_id": "TRF-CHN",
