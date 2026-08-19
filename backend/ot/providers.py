@@ -9,40 +9,37 @@ from typing import Dict, Any
 class TelemetryNormalizer:
     @staticmethod
     def normalize_transformer(measurements: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalizes transformer parameters to standard OTI, WTI, ATI, current, power."""
+        """Normalizes transformer parameters to standard OTI, WTI, load_percent, current, voltage, power."""
         return {
             "OTI": round(float(measurements.get("oil_temperature", measurements.get("OTI", 50.0))), 2),
             "WTI": round(float(measurements.get("winding_temperature", measurements.get("WTI", 56.0))), 2),
-            "ATI": round(float(measurements.get("ambient_temperature", measurements.get("ATI", 30.0))), 2),
-            "OLI": round(float(measurements.get("oil_level", measurements.get("OLI", 85.0))), 2),
-            "VL1": round(float(measurements.get("voltage", measurements.get("VL1", 11.02))), 2),
-            "VL2": round(float(measurements.get("voltage", measurements.get("VL2", 11.02))), 2),
-            "VL3": round(float(measurements.get("voltage", measurements.get("VL3", 11.02))), 2),
-            "IL1": round(float(measurements.get("current", measurements.get("IL1", 420.0))), 1),
-            "IL2": round(float(measurements.get("current", measurements.get("IL2", 420.0))), 1),
-            "IL3": round(float(measurements.get("current", measurements.get("IL3", 420.0))), 1),
-            "KW": round(float(measurements.get("power", measurements.get("KW", 800.0))), 1)
+            "load_percent": round(float(measurements.get("load_percent", 60.0)), 1),
+            "current": round(float(measurements.get("current", 350.0)), 1),
+            "voltage": round(float(measurements.get("voltage", 11000.0)), 1),
+            "power": round(float(measurements.get("power", measurements.get("KW", 800.0))), 1)
         }
 
     @staticmethod
     def normalize_chiller(measurements: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalizes chiller parameters to standard TEI, TEO, TCI, TCO, kW."""
+        """Normalizes chiller parameters to standard TEI, TEO, cooling_load, compressor_current, kW."""
         return {
             "TEI": round(float(measurements.get("return_temperature", measurements.get("TEI", 12.0))), 2),
             "TEO": round(float(measurements.get("supply_temperature", measurements.get("TEO", 7.0))), 2),
-            "TCI": round(float(measurements.get("condenser_inlet_temperature", measurements.get("TCI", 28.0))), 2),
-            "TCO": round(float(measurements.get("condenser_outlet_temperature", measurements.get("TCO", 33.0))), 2),
-            "kW": round(float(measurements.get("compressor_power", measurements.get("kW", measurements.get("kW_draw", 180.0)))), 1)
+            "cooling_load": round(float(measurements.get("cooling_load", 70.0)), 1),
+            "compressor_current": round(float(measurements.get("compressor_current", 150.0)), 1),
+            "kW": round(float(measurements.get("compressor_power", measurements.get("kW", 180.0))), 1)
         }
 
     @staticmethod
     def normalize_pump(measurements: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalizes water pump parameters to standard flow, pressure, motor_temperature, vibration."""
+        """Normalizes water pump parameters to standard flow, pressure, motor_temperature, vibration, motor_current, motor_power."""
         return {
             "flow": round(float(measurements.get("flow_rate", measurements.get("flow", 125.0))), 2),
             "pressure": round(float(measurements.get("pressure", 4.2)), 2),
             "motor_temperature": round(float(measurements.get("motor_temperature", 48.0)), 2),
-            "vibration": round(float(measurements.get("vibration", 1.5)), 2)
+            "vibration": round(float(measurements.get("vibration", 1.5)), 2),
+            "motor_current": round(float(measurements.get("motor_current", 18.0)), 1),
+            "motor_power": round(float(measurements.get("motor_power", 11.0)), 1)
         }
 
     @staticmethod

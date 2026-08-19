@@ -8,12 +8,13 @@
     "protocol": "mqtt",
     "status": "ONLINE",
     "telemetry_frequency": 5,
-    "last_seen": "",
+    "last_seen": "2026-08-19 23:43:53",
     "sensors": [
       "oil_temperature",
       "winding_temperature",
       "load_percent"
-    ]
+    ],
+    "signal_quality": 100
   },
   {
     "device_id": "CHL-CBE",
@@ -22,7 +23,7 @@
     "location": "CBE-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 5,
     "last_seen": "",
     "sensors": [
@@ -38,7 +39,7 @@
     "location": "CBE-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 5,
     "last_seen": "",
     "sensors": [
@@ -54,7 +55,7 @@
     "location": "CBE-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 10,
     "last_seen": "",
     "sensors": [
@@ -69,7 +70,7 @@
     "location": "CHN-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 5,
     "last_seen": "",
     "sensors": [
@@ -85,7 +86,7 @@
     "location": "CHN-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 5,
     "last_seen": "",
     "sensors": [
@@ -101,7 +102,7 @@
     "location": "CHN-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 5,
     "last_seen": "",
     "sensors": [
@@ -117,7 +118,7 @@
     "location": "CHN-001",
     "firmware_version": "1.0.0",
     "protocol": "mqtt",
-    "status": "ONLINE",
+    "status": "OFFLINE",
     "telemetry_frequency": 10,
     "last_seen": "",
     "sensors": [

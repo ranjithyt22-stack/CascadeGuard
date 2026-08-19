@@ -140,6 +140,7 @@ def load_all_models():
     global site_registry, regional_risk_engine
     global weather_client_inst, transformer_client_inst, chiller_client_inst, water_pump_client_inst
     global telemetry_mgr, incident_engine, alert_manager
+    global device_registry, mqtt_client
 
     # ── Transformer models ────────────────────────────────────────────────
     health_model = joblib.load(HEALTH_MODEL_PATH)
