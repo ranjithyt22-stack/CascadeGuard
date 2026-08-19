@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* tokens.css – Centralized design tokens for CascadeGuard UI */
+:root {
+  /* Background layers */
+  --bg-app: #0B1120;          /* Level 1 – Application background */
+  --bg-surface: #0F172A;      /* Level 2 – Cards / panels */
+  --bg-elevated: #111827;    /* Level 3 – Hover / elevated surfaces */
+
+  /* Border colors */
+  --border-subtle: #1E293B;   /* Subtle borders */
+  --border-strong: #334155;   /* Stronger borders */
+
+  /* Text palette */
+  --text-primary: #F8FAFC;   /* Main UI text */
+  --text-secondary: #CBD5E1; /* Secondary text */
+  --text-muted: #94A3B8;     /* Muted / hint text */
+
+  /* Brand colors */
+  --brand-primary: #2563EB;  /* Primary brand blue */
+  --brand-accent: #06B6D4;   /* Accent cyan */
+
+  /* Risk / status semantic colors */
+  --risk-normal: #3B82F6;    /* Normal / info */
+  --risk-moderate: #06B6D4;  /* Moderate / watch */
+  --risk-high: #F59E0B;      /* High / warning */
+  --risk-critical: #EF4444;  /* Critical / danger */
+
+  /* General status colors */
+  --success: #22C55E;        /* Success */
+  --warning: #F59E0B;        /* Warning */
+  --danger: #EF4444;         /* Danger */
+  --info: #3B82F6;           /* Info */
+
+  /* Spacing system (8px grid) */
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-16: 16px;
+  --spacing-24: 24px;
+  --spacing-32: 32px;
+  --spacing-40: 40px;
+
+  /* Centralized Typography Tokens */
+  --font-xs: 12px;
+  --font-sm: 13px;
+  --font-body: 15px;
+  --font-body-lg: 16px;
+  --font-section: 17px;
+  --font-title: 24px;
+  --font-page-title: 30px;
+  --font-hero: 42px;
+
+  /* Typography fonts */
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+/* Utility classes */
+.font-body { font-family: var(--font-body); }
+.font-mono { font-family: var(--font-mono); }
+
+/* Apply background layers */
+body { background-color: var(--bg-app); color: var(--text-primary); font-family: var(--font-body); }
+.sidebar, .top-header { background-color: var(--bg-surface); }
+.panel, .site-card, .site-config-layout, .inc-table-container, .regional-map-layout { background-color: var(--bg-surface); border-color: var(--border-subtle); }
+.panel:hover, .site-card:hover, .site-card.active { background-color: var(--bg-elevated); }

@@ -1,0 +1,33 @@
+{
+  "model_id": "Model-3-TransformerHealth",
+  "version": "v1.1-dga",
+  "training_timestamp": "2026-08-19 15:50:00",
+  "dataset": "data/processed/transformer_health_processed.csv",
+  "features": [
+    "Hydrogen",
+    "Oxigen",
+    "Nitrogen",
+    "Methane",
+    "CO",
+    "CO2",
+    "Ethylene",
+    "Ethane",
+    "Acethylene",
+    "DBDS",
+    "Power factor",
+    "Interfacial V",
+    "Dielectric rigidity",
+    "Water content"
+  ],
+  "target": "Health index",
+  "metrics": {
+    "mae_pts": 14.53,
+    "rmse_pts": 17.91,
+    "r2": -4.067153942601245e+30
+  },
+  "baselines": {
+    "baseline_mean_mae": 17.63
+  },
+  "leakage_status": "PASS",
+  "disclaimer": "MODEL-BASED HEALTH ESTIMATE (Not a certified transformer condition assessment)."
+}

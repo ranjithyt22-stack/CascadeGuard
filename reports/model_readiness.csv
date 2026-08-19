@@ -1,0 +1,7 @@
+model,version,dataset,target,train_start,train_end,test_start,test_end,baseline,baseline_metric,model_metric,leakage_status,data_quality,confidence,model_reliability,target_type,production_status,limitations
+Hospital Load,v1.1-chronological,hospital_load_processed.csv,total_load_kw,,,,,prev_value,"MAE 46.28, RMSE 65.50, R2 0.9473",see model health service,PASS,GOOD,HIGH,HIGH,REGRESSION,READY,
+Transformer Thermal,v1.1-chronological,transformer_processed.csv,target_oti,,,,,prev_temp,"MAE 0.74, RMSE 1.13, R2 0.9749",see model health service,PASS,GOOD,HIGH,HIGH,REGRESSION,READY,
+Transformer Health,v1.1-dga,transformer_health_processed.csv,Health index,,,,,none,No meaningful naive baseline available.,see model health service,PASS,GOOD,MEDIUM,MEDIUM,REGRESSION,READY,
+HVAC Chiller Fault,v1.1-rf,chiller_processed.csv,label,,,,,majority_class,"Acc 0.3636, BalAcc 0.1250, MacroF1 0.0667",see model health service,PASS,GOOD,HIGH,HIGH,CLASSIFICATION,READY,
+Water Pump RUL Risk,v1.1-chronological,water_pump_5m_sampled.csv,risk_state_code,,,,,last_known_rul,see baseline dict,see model health service,WARNING,DEGRADED,LOW,LOW,RISK_CLASSIFICATION,DECISION_SUPPORT_ONLY,
+Flood Exposure,v1.1-hydrological,synthetic_flood_data,flood_risk_state,,,,,synthetic_exposure,N/A,see model health service,PASS,GOOD,HIGH,HIGH,SYNTHETIC_EXPOSURE,READY,

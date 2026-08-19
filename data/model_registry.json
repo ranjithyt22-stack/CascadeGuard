@@ -1,0 +1,718 @@
+{
+  "models": {
+    "RiskModel-v1787073472": {
+      "model_id": "RiskModel-v1787073472",
+      "version": "v1787073472",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-18 22:47:52",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787073485": {
+      "model_id": "RiskModel-v1787073485",
+      "version": "v1787073485",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "ACTIVE",
+      "created_at": "2026-08-18 22:48:05",
+      "activated_at": "2026-08-18 22:51:45",
+      "retired_at": null
+    },
+    "RiskModel-v1787073514": {
+      "model_id": "RiskModel-v1787073514",
+      "version": "v1787073514",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v3",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            1
+          ]
+        ],
+        "train_records": 2,
+        "test_records": 1
+      },
+      "status": "RETIRED",
+      "created_at": "2026-08-18 22:48:34",
+      "activated_at": "2026-08-18 22:48:35",
+      "retired_at": "2026-08-18 22:51:45"
+    },
+    "RiskModel-v1787073964": {
+      "model_id": "RiskModel-v1787073964",
+      "version": "v1787073964",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-18 22:56:04",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787074797": {
+      "model_id": "RiskModel-v1787074797",
+      "version": "v1787074797",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-18 23:09:57",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787074815": {
+      "model_id": "RiskModel-v1787074815",
+      "version": "v1787074815",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-18 23:10:15",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787074830": {
+      "model_id": "RiskModel-v1787074830",
+      "version": "v1787074830",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-18 23:10:30",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787127106": {
+      "model_id": "RiskModel-v1787127106",
+      "version": "v1787127106",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 13:41:46",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787128264": {
+      "model_id": "RiskModel-v1787128264",
+      "version": "v1787128264",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 14:01:04",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787128321": {
+      "model_id": "RiskModel-v1787128321",
+      "version": "v1787128321",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 14:02:01",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787128835": {
+      "model_id": "RiskModel-v1787128835",
+      "version": "v1787128835",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 14:10:35",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787134017": {
+      "model_id": "RiskModel-v1787134017",
+      "version": "v1787134017",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 15:36:57",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787134264": {
+      "model_id": "RiskModel-v1787134264",
+      "version": "v1787134264",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 15:41:04",
+      "activated_at": null,
+      "retired_at": null
+    },
+    "RiskModel-v1787134913": {
+      "model_id": "RiskModel-v1787134913",
+      "version": "v1787134913",
+      "model_type": "RandomForest",
+      "training_dataset_version": "training_dataset_v25",
+      "features": [
+        "temperature",
+        "apparent_temperature",
+        "humidity",
+        "wind_speed",
+        "equipment_type_code",
+        "site_code",
+        "pre_action_risk",
+        "impact_score",
+        "urgency_score",
+        "hour",
+        "day_of_week",
+        "month"
+      ],
+      "metrics": {
+        "accuracy": 1.0,
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "confusion_matrix": [
+          [
+            4,
+            0
+          ],
+          [
+            0,
+            4
+          ]
+        ],
+        "train_records": 17,
+        "test_records": 8
+      },
+      "status": "VALIDATED",
+      "created_at": "2026-08-19 15:51:53",
+      "activated_at": null,
+      "retired_at": null
+    }
+  },
+  "audit_log": [
+    {
+      "event_id": "EVT-1787134913739",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787134913",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787134913 with F1=1.0",
+      "timestamp": "2026-08-19 15:51:53"
+    },
+    {
+      "event_id": "EVT-1787134264295",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787134264",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787134264 with F1=1.0",
+      "timestamp": "2026-08-19 15:41:04"
+    },
+    {
+      "event_id": "EVT-1787134017863",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787134017",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787134017 with F1=1.0",
+      "timestamp": "2026-08-19 15:36:57"
+    },
+    {
+      "event_id": "EVT-1787128835108",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787128835",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787128835 with F1=1.0",
+      "timestamp": "2026-08-19 14:10:35"
+    },
+    {
+      "event_id": "EVT-1787128321769",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787128321",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787128321 with F1=1.0",
+      "timestamp": "2026-08-19 14:02:01"
+    },
+    {
+      "event_id": "EVT-1787128264344",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787128264",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787128264 with F1=1.0",
+      "timestamp": "2026-08-19 14:01:04"
+    },
+    {
+      "event_id": "EVT-1787127106110",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787127106",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787127106 with F1=1.0",
+      "timestamp": "2026-08-19 13:41:46"
+    },
+    {
+      "event_id": "EVT-1787074830395",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787074830",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787074830 with F1=1.0",
+      "timestamp": "2026-08-18 23:10:30"
+    },
+    {
+      "event_id": "EVT-1787074815953",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787074815",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787074815 with F1=1.0",
+      "timestamp": "2026-08-18 23:10:15"
+    },
+    {
+      "event_id": "EVT-1787074797179",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787074797",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787074797 with F1=1.0",
+      "timestamp": "2026-08-18 23:09:57"
+    },
+    {
+      "event_id": "EVT-1787073964998",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787073964",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787073964 with F1=1.0",
+      "timestamp": "2026-08-18 22:56:04"
+    },
+    {
+      "event_id": "EVT-1787073705593",
+      "operation": "MODEL_ROLLED_BACK",
+      "model_id": "RiskModel-v1787073485",
+      "actor": "Operator/API",
+      "details": "Rolled back to model v1787073485",
+      "timestamp": "2026-08-18 22:51:45"
+    },
+    {
+      "event_id": "EVT-1787073515033",
+      "operation": "MODEL_ACTIVATED",
+      "model_id": "RiskModel-v1787073514",
+      "actor": "Operator/API",
+      "details": "Activated model v1787073514",
+      "timestamp": "2026-08-18 22:48:35"
+    },
+    {
+      "event_id": "EVT-1787073514970",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787073514",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787073514 with F1=1.0",
+      "timestamp": "2026-08-18 22:48:34"
+    },
+    {
+      "event_id": "EVT-1787073485802",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787073485",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787073485 with F1=1.0",
+      "timestamp": "2026-08-18 22:48:05"
+    },
+    {
+      "event_id": "EVT-1787073472344",
+      "operation": "MODEL_REGISTERED",
+      "model_id": "RiskModel-v1787073472",
+      "actor": "MLTrainingEngine",
+      "details": "Registered model v1787073472 with F1=1.0",
+      "timestamp": "2026-08-18 22:47:52"
+    }
+  ],
+  "last_updated": "2026-08-19 15:51:53"
+}

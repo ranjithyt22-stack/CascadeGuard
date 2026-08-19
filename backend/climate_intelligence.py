@@ -206,12 +206,42 @@ def analyze_climate_intelligence(weather_raw_data, site_config=None):
                 "stress": round(float(stresses.iloc[idx]), 1)
             })
 
+    site_id = site_config.get("site_id", weather_raw_data.get("site_id", "SITE-001"))
+    site_name = site_config.get("site_name", f"{site_id} Facility")
+    city_name = site_config.get("city", site_config.get("location", {}).get("name", "Coimbatore"))
+    lat_val = float(weather_raw_data.get("latitude", site_config.get("location", {}).get("latitude", 11.00555)))
+    lon_val = float(weather_raw_data.get("longitude", site_config.get("location", {}).get("longitude", 76.96612)))
+    src_val = weather_raw_data.get("source", "Open-Meteo")
+    src_status = weather_raw_data.get("source_status", "LIVE" if is_live else "OFFLINE_FALLBACK")
+
+    # For user request compat (Requirement 15)
+    forecast_points = []
+    if "hourly_series" in weather_raw_data:
+        for idx, row in enumerate(weather_raw_data["hourly_series"]):
+            forecast_points.append({
+                "horizon": f"+{idx}H" if idx > 0 else "NOW",
+                "time": str(row["time"]),
+                "temperature": float(row["temperature"]),
+                "humidity": float(row["humidity"]),
+                "precipitation": float(row.get("rain", 0.0)),
+                "wind_speed": float(row.get("wind", 0.0)),
+                "stress": round(float(stresses.iloc[idx]), 1)
+            })
+    else:
+        forecast_points = visual_points
+
     return {
-        "site_id": site_config.get("site_id", "SITE-001"),
-        "location": weather_raw_data.get("location", site_config.get("location", {}).get("name", "Coimbatore")),
+        "site_id": site_id,
+        "site_name": site_name,
+        "city": city_name,
+        "location": city_name,
+        "latitude": lat_val,
+        "longitude": lon_val,
+        "source": src_val,
+        "source_status": src_status,
         "coordinates": {
-            "latitude": weather_raw_data.get("latitude", site_config.get("location", {}).get("latitude", 11.00555)),
-            "longitude": weather_raw_data.get("longitude", site_config.get("location", {}).get("longitude", 76.96612))
+            "latitude": lat_val,
+            "longitude": lon_val
         },
         "current": {
             "temperature": curr_temp,
@@ -220,6 +250,23 @@ def analyze_climate_intelligence(weather_raw_data, site_config=None):
             "wind": curr_wind,
             "timestamp": weather_raw_data.get("timestamp", time.strftime("%Y-%m-%d %H:%M:%S"))
         },
+        
+        # User payload schema compatibility (Requirement 15)
+        "current_weather": {
+            "temperature": curr_temp,
+            "humidity": curr_hum,
+            "precipitation": curr_rain,
+            "wind_speed": curr_wind,
+            "apparent_temperature": float(weather_raw_data.get("apparent_temperature", curr_temp + 2.5)),
+            "surface_pressure": float(weather_raw_data.get("surface_pressure", 1013.25)),
+            "weather_code": int(weather_raw_data.get("weather_code", 0))
+        },
+        "climate_stress": overall_stress,
+        "forecast": forecast_points,
+        "weather_source": src_val,
+        "weather_status": src_status,
+        "last_updated": weather_raw_data.get("timestamp", time.strftime("%Y-%m-%d %H:%M:%S")),
+
         "forecast_trend": forecast_trend,
         "heatwave": heatwave_info,
         "asset_impacts": asset_impacts,

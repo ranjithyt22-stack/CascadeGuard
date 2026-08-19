@@ -1,0 +1,9 @@
+model_name,algorithm,target_variable,training_dataset,input_features_count,accuracy,f1_score,roc_auc,mae_rmse,artifact_path,status,reuse_decision
+Transformer Risk Model (Active),RandomForest,Climate & Infrastructure Risk Score,training_dataset_v25,12,1.000,1.000,1.000,N/A,data/model_registry.json,ACTIVE,KEEP
+Transformer Thermal Stress v3,XGBClassifier,Thermal Event within 60m,transformer_merged.csv,100,N/A,N/A,0.940,N/A,models/operational_stress_xgboost_v3.pkl,active_trained,IMPROVE
+Transformer 15m Early Warning,XGBClassifier,Thermal Event within 15m,transformer_merged.csv,15m rolling features,N/A,0.100,0.941,N/A,models/predictive_15m_xgboost.pkl,active,KEEP
+Transformer 30m Early Warning,XGBClassifier,Thermal Event within 30m,transformer_merged.csv,30m rolling features,N/A,0.310,0.829,N/A,models/predictive_30m_xgboost.pkl,active,KEEP
+Transformer 60m Early Warning,XGBClassifier,Thermal Event within 60m,transformer_merged.csv,60m rolling features,N/A,0.262,0.812,N/A,models/predictive_60m_xgboost.pkl,active,KEEP
+Transformer DGA Health Index,XGBoost,Health Index (0-100),Health index1.csv,14,N/A,N/A,N/A,MAE: 2.1 pts,models/health_index_xgboost.pkl,trained,KEEP
+Chiller Fault Classifier,XGBClassifier (multi:softprob),8-Class Chiller Fault (label),11000.xlsx,16,0.976,0.977,0.999,N/A,models/chiller_xgboost.pkl,trained,KEEP
+Water Pump Risk Classifier,XGBClassifier (multi:softprob),4-State RUL Risk (NORMAL/WATCH/WARN/CRIT),rul_hrs.csv,51,0.230,0.179,0.494,MAE: 295h (R2: -4.01),models/water_pump_xgboost.pkl,DECISION_SUPPORT_ONLY,IMPROVE

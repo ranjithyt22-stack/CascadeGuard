@@ -1,0 +1,128 @@
+[
+  {
+    "device_id": "TRF-CBE",
+    "asset_id": "TX-001",
+    "asset_type": "transformer",
+    "location": "CBE-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "oil_temperature",
+      "winding_temperature",
+      "load_percent"
+    ]
+  },
+  {
+    "device_id": "CHL-CBE",
+    "asset_id": "CH-001",
+    "asset_type": "chiller",
+    "location": "CBE-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "compressor_power",
+      "supply_temperature",
+      "flow_rate"
+    ]
+  },
+  {
+    "device_id": "PMP-CBE",
+    "asset_id": "WP-001",
+    "asset_type": "water_pump",
+    "location": "CBE-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "motor_temperature",
+      "vibration",
+      "flow_rate"
+    ]
+  },
+  {
+    "device_id": "ENV-CBE",
+    "asset_id": "ENV-CBE",
+    "asset_type": "environment",
+    "location": "CBE-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 10,
+    "last_seen": "",
+    "sensors": [
+      "outdoor_temperature",
+      "humidity"
+    ]
+  },
+  {
+    "device_id": "TRF-CHN",
+    "asset_id": "TR-001",
+    "asset_type": "transformer",
+    "location": "CHN-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "oil_temperature",
+      "winding_temperature",
+      "load_percent"
+    ]
+  },
+  {
+    "device_id": "CHL-CHN",
+    "asset_id": "CH-001",
+    "asset_type": "chiller",
+    "location": "CHN-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "compressor_power",
+      "supply_temperature",
+      "flow_rate"
+    ]
+  },
+  {
+    "device_id": "PMP-CHN",
+    "asset_id": "WP-001",
+    "asset_type": "water_pump",
+    "location": "CHN-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 5,
+    "last_seen": "",
+    "sensors": [
+      "motor_temperature",
+      "vibration",
+      "flow_rate"
+    ]
+  },
+  {
+    "device_id": "ENV-CHN",
+    "asset_id": "ENV-CHN",
+    "asset_type": "environment",
+    "location": "CHN-001",
+    "firmware_version": "1.0.0",
+    "protocol": "mqtt",
+    "status": "ONLINE",
+    "telemetry_frequency": 10,
+    "last_seen": "",
+    "sensors": [
+      "outdoor_temperature",
+      "humidity"
+    ]
+  }
+]

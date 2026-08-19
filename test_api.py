@@ -8,7 +8,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), "backend"))
 if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
-BASE_URL = "http://127.0.0.1:5050"
+BASE_URL = os.environ.get("BASE_URL", "http://127.0.0.1:5000")
 
 print("=" * 65)
 print("CASCADEGUARD API TEST SUITE - PHASE 6 (FLEET COMMAND CENTER)")
@@ -1566,6 +1566,160 @@ try:
     log_test("Multi-Site Data Provenance Verification", is_ok, f"(wp_source={wp_source})")
 except Exception as e:
     log_test("Multi-Site Data Provenance Verification", False, str(e))
+
+
+# 109. Site Geolocation Climate Differentiation (SITE-001 vs SITE-002 vs SITE-003)
+try:
+    r1 = requests.get(f"{BASE_URL}/api/climate?site_id=SITE-001", timeout=10).json()
+    r2 = requests.get(f"{BASE_URL}/api/climate?site_id=SITE-002", timeout=10).json()
+    r3 = requests.get(f"{BASE_URL}/api/climate?site_id=SITE-003", timeout=10).json()
+
+    c1 = r1.get("climate_intelligence", {})
+    c2 = r2.get("climate_intelligence", {})
+    c3 = r3.get("climate_intelligence", {})
+
+    is_ok = (
+        c1.get("latitude") == 11.00555 and
+        c2.get("latitude") == 13.0827 and
+        c3.get("latitude") == 12.9716 and
+        c1.get("site_id") == "SITE-001" and
+        c2.get("site_id") == "SITE-002" and
+        c3.get("site_id") == "SITE-003"
+    )
+    log_test("Site Geolocation Climate Differentiation", is_ok, f"(S1={c1.get('latitude')}, S2={c2.get('latitude')}, S3={c3.get('latitude')})")
+except Exception as e:
+    log_test("Site Geolocation Climate Differentiation", False, str(e))
+
+
+# 110. GET /api/sites/<site_id>/climate Endpoint
+try:
+    res = requests.get(f"{BASE_URL}/api/sites/SITE-003/climate", timeout=10)
+    data = res.json()
+    ci = data.get("climate_intelligence", {})
+    is_ok = (
+        res.status_code == 200 and
+        data.get("success") is True and
+        ci.get("site_id") == "SITE-003" and
+        ci.get("latitude") == 12.9716 and
+        ci.get("longitude") == 77.5946
+    )
+    log_test("GET /api/sites/<site_id>/climate Endpoint", is_ok, f"(site_id={ci.get('site_id')}, lat={ci.get('latitude')})")
+except Exception as e:
+    log_test("GET /api/sites/<site_id>/climate Endpoint", False, str(e))
+
+
+# 111. Invalid Latitude Validation (HTTP 400)
+try:
+    res = requests.get(f"{BASE_URL}/api/climate?latitude=95.0&longitude=76.0", timeout=10)
+    is_ok = (res.status_code == 400 and res.json().get("success") is False)
+    log_test("Invalid Latitude Validation (HTTP 400)", is_ok, f"(status_code={res.status_code})")
+except Exception as e:
+    log_test("Invalid Latitude Validation (HTTP 400)", False, str(e))
+
+
+# 112. Invalid Longitude Validation (HTTP 400)
+try:
+    res = requests.get(f"{BASE_URL}/api/climate?latitude=11.0&longitude=200.0", timeout=10)
+    is_ok = (res.status_code == 400 and res.json().get("success") is False)
+    log_test("Invalid Longitude Validation (HTTP 400)", is_ok, f"(status_code={res.status_code})")
+except Exception as e:
+    log_test("Invalid Longitude Validation (HTTP 400)", False, str(e))
+
+
+# 113. Unknown Site ID Handling (HTTP 404)
+try:
+    res = requests.get(f"{BASE_URL}/api/sites/SITE-UNKNOWN-999/climate", timeout=10)
+    is_ok = (res.status_code == 404 and res.json().get("success") is False)
+    log_test("Unknown Site ID Handling (HTTP 404)", is_ok, f"(status_code={res.status_code})")
+except Exception as e:
+    log_test("Unknown Site ID Handling (HTTP 404)", False, str(e))
+
+
+# 114. Realtime Status Site Parameter
+try:
+    res = requests.get(f"{BASE_URL}/api/realtime-status?site_id=SITE-002", timeout=10)
+    data = res.json()
+    site_info = data.get("site", {})
+    is_ok = (
+        res.status_code == 200 and
+        data.get("success") is True and
+        site_info.get("site_id") == "SITE-002"
+    )
+    log_test("Realtime Status Site Parameter", is_ok, f"(site_id={site_info.get('site_id')})")
+except Exception as e:
+    log_test("Realtime Status Site Parameter", False, str(e))
+
+
+# 115. Executive PDF Report Validation
+try:
+    res = requests.get(f"{BASE_URL}/api/reports/executive", timeout=10)
+    ctype = res.headers.get("Content-Type", "")
+    cdisp = res.headers.get("Content-Disposition", "")
+    content = res.content
+    is_ok = (
+        res.status_code == 200 and
+        "application/pdf" in ctype and
+        "CascadeGuard_Executive_Report.pdf" in cdisp and
+        len(content) > 0 and
+        content.startswith(b"%PDF-")
+    )
+    log_test("Executive PDF Report Validation", is_ok, f"(size={len(content)}, header={content[:5]})")
+except Exception as e:
+    log_test("Executive PDF Report Validation", False, str(e))
+
+
+# 116. Regional PDF Report Validation
+try:
+    res = requests.get(f"{BASE_URL}/api/reports/regional", timeout=10)
+    ctype = res.headers.get("Content-Type", "")
+    cdisp = res.headers.get("Content-Disposition", "")
+    content = res.content
+    is_ok = (
+        res.status_code == 200 and
+        "application/pdf" in ctype and
+        "CascadeGuard_Regional_Report.pdf" in cdisp and
+        len(content) > 0 and
+        content.startswith(b"%PDF-")
+    )
+    log_test("Regional PDF Report Validation", is_ok, f"(size={len(content)})")
+except Exception as e:
+    log_test("Regional PDF Report Validation", False, str(e))
+
+
+# 117. Fleet PDF Report Validation
+try:
+    res = requests.get(f"{BASE_URL}/api/reports/fleet", timeout=10)
+    ctype = res.headers.get("Content-Type", "")
+    cdisp = res.headers.get("Content-Disposition", "")
+    content = res.content
+    is_ok = (
+        res.status_code == 200 and
+        "application/pdf" in ctype and
+        "CascadeGuard_Fleet_Report.pdf" in cdisp and
+        len(content) > 0 and
+        content.startswith(b"%PDF-")
+    )
+    log_test("Fleet PDF Report Validation", is_ok, f"(size={len(content)})")
+except Exception as e:
+    log_test("Fleet PDF Report Validation", False, str(e))
+
+
+# 118. Incident PDF Report Endpoint Validation
+try:
+    res = requests.post(f"{BASE_URL}/api/incidents/generate-report", json={}, timeout=10)
+    ctype = res.headers.get("Content-Type", "")
+    cdisp = res.headers.get("Content-Disposition", "")
+    content = res.content
+    is_ok = (
+        res.status_code == 200 and
+        "application/pdf" in ctype and
+        ".pdf" in cdisp and
+        len(content) > 0 and
+        content.startswith(b"%PDF-")
+    )
+    log_test("Incident PDF Report Endpoint Validation", is_ok, f"(cdisp={cdisp})")
+except Exception as e:
+    log_test("Incident PDF Report Endpoint Validation", False, str(e))
 
 
 print("=" * 65)

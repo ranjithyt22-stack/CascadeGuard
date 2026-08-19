@@ -1,0 +1,46 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Runtime/generated data
+data/*.db
+data/cache/
+data/runtime/
+*.sqlite
+*.sqlite3
+
+# Generated reports
+reports/generated/
+*.pdf
+
+# Node
+node_modules/
+
+# Temporary files
+*.tmp
+*.bak
+
+# Antigravity / local development
+.brain/

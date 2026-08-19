@@ -1,0 +1,122 @@
+[
+  {
+    "site_id": "SITE-001",
+    "site_name": "KMCH Hospital Command Center",
+    "facility_name": "KMCH",
+    "city": "Coimbatore",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "latitude": 11.0168,
+    "longitude": 76.9558,
+    "transformer_id": "T1",
+    "chiller_id": "C1",
+    "water_pump_id": "P1",
+    "climate_sensor_id": "CLIMATE-01",
+    "asset_ids": {
+      "transformer": "T1",
+      "chiller": "C1",
+      "water_pump": "P1"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  },
+  {
+    "site_id": "CHN-001",
+    "site_name": "Chennai Regional Hub",
+    "facility_name": "Chennai Medical",
+    "city": "Chennai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "latitude": 13.0827,
+    "longitude": 80.2707,
+    "transformer_id": "T2",
+    "chiller_id": "C2",
+    "water_pump_id": "P2",
+    "climate_sensor_id": "CLIMATE-02",
+    "asset_ids": {
+      "transformer": "T2",
+      "chiller": "C2",
+      "water_pump": "P2"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  },
+  {
+    "site_id": "MDU-001",
+    "site_name": "Madurai Facility",
+    "facility_name": "Madurai Health",
+    "city": "Madurai",
+    "state": "Tamil Nadu",
+    "country": "India",
+    "latitude": 9.9252,
+    "longitude": 78.1198,
+    "transformer_id": "T3",
+    "chiller_id": "C3",
+    "water_pump_id": "P3",
+    "climate_sensor_id": "CLIMATE-03",
+    "asset_ids": {
+      "transformer": "T3",
+      "chiller": "C3",
+      "water_pump": "P3"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  },
+  {
+    "site_id": "CBE-001",
+    "site_name": "Coimbatore Industrial Facility",
+    "city": "Coimbatore",
+    "latitude": 11.00555,
+    "longitude": 76.96612,
+    "transformer_id": "TX-001",
+    "chiller_id": "CH-001",
+    "water_pump_id": "WP-001",
+    "asset_ids": {
+      "transformer": "TX-001",
+      "chiller": "CH-001",
+      "water_pump": "WP-001"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  },
+  {
+    "site_id": "TRY-001",
+    "site_name": "Trichy Logistics Center",
+    "city": "Trichy",
+    "latitude": 10.7905,
+    "longitude": 78.7047,
+    "transformer_id": "TR-003",
+    "chiller_id": "CH-003",
+    "water_pump_id": "WP-003",
+    "asset_ids": {
+      "transformer": "TR-003",
+      "chiller": "CH-003",
+      "water_pump": "WP-003"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  },
+  {
+    "site_id": "SLM-001",
+    "site_name": "Salem Substation Plant",
+    "city": "Salem",
+    "latitude": 11.6643,
+    "longitude": 78.146,
+    "transformer_id": "TR-004",
+    "chiller_id": "CH-004",
+    "water_pump_id": "WP-004",
+    "asset_ids": {
+      "transformer": "TR-004",
+      "chiller": "CH-004",
+      "water_pump": "WP-004"
+    },
+    "timezone": "Asia/Kolkata",
+    "status": "ACTIVE",
+    "telemetry_mode": "MOCK"
+  }
+]

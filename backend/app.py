@@ -1084,19 +1084,59 @@ def generate_incident_report_endpoint():
                     }
                 }
 
-        pdf_bytes = generate_pdf_report(inc)
         filename = f"CascadeGuard_Incident_{inc.get('incident_id', 'Report')}.pdf"
+        return _flask_pdf_response(inc, filename)
+    except Exception as e:
+        import traceback
+        traceback.print_exc()
+        return jsonify({"status": "error", "message": str(e)}), 500
 
-        return send_file(
+
+def _flask_pdf_response(inc_dict, filename):
+    try:
+        pdf_bytes = generate_pdf_report(inc_dict)
+        if not pdf_bytes or len(pdf_bytes) == 0 or not pdf_bytes.startswith(b"%PDF-"):
+            return jsonify({"status": "error", "message": "Generated report is not a valid PDF file"}), 500
+
+        if not filename.lower().endswith(".pdf"):
+            filename = f"{filename}.pdf"
+
+        res = send_file(
             io.BytesIO(pdf_bytes),
             mimetype="application/pdf",
             as_attachment=True,
             download_name=filename
         )
+        res.headers["Content-Type"] = "application/pdf"
+        res.headers["Content-Disposition"] = f'attachment; filename="{filename}"'
+        return res
     except Exception as e:
-        import traceback
-        traceback.print_exc()
-        return jsonify({"success": False, "error": str(e)}), 500
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route("/api/reports/executive", methods=["GET", "POST"])
+def executive_report_flask():
+    return _flask_pdf_response(incident_engine.get_all_incidents().get("active_incidents", [{}])[0] or {}, "CascadeGuard_Executive_Report.pdf")
+
+
+@app.route("/api/reports/regional", methods=["GET", "POST"])
+def regional_report_flask():
+    return _flask_pdf_response(incident_engine.get_all_incidents().get("active_incidents", [{}])[0] or {}, "CascadeGuard_Regional_Report.pdf")
+
+
+@app.route("/api/reports/fleet", methods=["GET", "POST"])
+def fleet_report_flask():
+    return _flask_pdf_response(incident_engine.get_all_incidents().get("active_incidents", [{}])[0] or {}, "CascadeGuard_Fleet_Report.pdf")
+
+
+@app.route("/api/reports/incident", methods=["GET", "POST"])
+def incident_report_flask():
+    inc_id = request.args.get("incident_id") or (request.get_json(silent=True) or {}).get("incident_id")
+    inc = incident_engine.get_incident_by_id(inc_id) if inc_id else None
+    if not inc:
+        inc = incident_engine.get_all_incidents().get("active_incidents", [{}])[0] or {}
+    fname = f"CascadeGuard_Incident_{inc_id}.pdf" if inc_id else "CascadeGuard_Incident_Report.pdf"
+    return _flask_pdf_response(inc, fname)
 
 
 @app.route("/api/alerts/status", methods=["GET"])
@@ -1248,15 +1288,45 @@ def site_config_endpoint():
     })
 
 
+@app.route("/api/climate", methods=["GET"])
 @app.route("/api/climate-intelligence", methods=["GET"])
 def climate_intelligence_endpoint():
     try:
-        site_cfg = get_active_site_config()
-        location = request.args.get("location", site_cfg["location"]["name"])
-        lat = request.args.get("latitude", site_cfg["location"]["latitude"])
-        lon = request.args.get("longitude", site_cfg["location"]["longitude"])
+        site_id = request.args.get("site_id")
+        if site_id:
+            site = site_registry.get_site(site_id)
+            if not site:
+                return jsonify({"success": False, "error": f"Site '{site_id}' not found."}), 404
+            
+            lat = site["latitude"]
+            lon = site["longitude"]
+            location = site.get("city", site.get("site_name", "Coimbatore"))
+            site_cfg = {
+                "site_id": site["site_id"],
+                "site_name": site["site_name"],
+                "city": location,
+                "location": {"name": location, "latitude": lat, "longitude": lon},
+                "assets": site.get("asset_ids", {"transformer_id": f"TX-{site['site_id']}", "chiller_id": f"CH-{site['site_id']}", "water_pump_id": f"WP-{site['site_id']}"}),
+                "climate_thresholds": {"heatwave_threshold_temp": 35.0, "heatwave_threshold_hours": 3}
+            }
+        else:
+            site_cfg = get_active_site_config()
+            location = request.args.get("location", site_cfg["location"]["name"])
+            
+            lat_arg = request.args.get("latitude")
+            lon_arg = request.args.get("longitude")
+            if lat_arg is not None or lon_arg is not None:
+                lat_val = lat_arg if lat_arg is not None else site_cfg["location"]["latitude"]
+                lon_val = lon_arg if lon_arg is not None else site_cfg["location"]["longitude"]
+                is_valid, err = validate_coordinates(lat_val, lon_val)
+                if not is_valid:
+                    return jsonify({"success": False, "error": err}), 400
+                lat, lon = float(lat_val), float(lon_val)
+            else:
+                lat = site_cfg["location"]["latitude"]
+                lon = site_cfg["location"]["longitude"]
 
-        w_norm = weather_client_inst.get_current_data(location=location, latitude=lat, longitude=lon)
+        w_norm = weather_client_inst.get_current_data(location=location, latitude=lat, longitude=lon, site_id=site_cfg.get("site_id", "SITE-001"))
         raw_weather = w_norm["data"]
 
         intel = analyze_climate_intelligence(raw_weather, site_cfg)
@@ -1279,8 +1349,22 @@ def live_alias_endpoint():
 
 @app.route("/api/realtime-status", methods=["GET"])
 def realtime_status_endpoint():
-    site_cfg = get_active_site_config()
-    w_norm = weather_client_inst.get_current_data(location=site_cfg["location"]["name"], latitude=site_cfg["location"]["latitude"], longitude=site_cfg["location"]["longitude"])
+    site_id = request.args.get("site_id")
+    if site_id:
+        site = site_registry.get_site(site_id)
+        if not site:
+            return jsonify({"success": False, "error": f"Site '{site_id}' not found."}), 404
+        site_cfg = {
+            "site_id": site["site_id"],
+            "site_name": site["site_name"],
+            "city": site.get("city", "Coimbatore"),
+            "location": {"name": site.get("city", "Coimbatore"), "latitude": site["latitude"], "longitude": site["longitude"]},
+            "assets": site.get("asset_ids", {"transformer_id": f"TX-{site['site_id']}", "chiller_id": f"CH-{site['site_id']}", "water_pump_id": f"WP-{site['site_id']}"})
+        }
+    else:
+        site_cfg = get_active_site_config()
+
+    w_norm = weather_client_inst.get_current_data(location=site_cfg["location"]["name"], latitude=site_cfg["location"]["latitude"], longitude=site_cfg["location"]["longitude"], site_id=site_cfg.get("site_id", "SITE-001"))
     intel = analyze_climate_intelligence(w_norm["data"], site_cfg)
 
     return jsonify({
@@ -1303,14 +1387,36 @@ def realtime_analyze_endpoint():
         else:
             req_data = request.args.to_dict()
 
-        site_cfg = get_active_site_config()
+        site_id = req_data.get("site_id")
+        if site_id:
+            site = site_registry.get_site(site_id)
+            if not site:
+                return jsonify({"success": False, "error": f"Site '{site_id}' not found."}), 404
+            site_cfg = {
+                "site_id": site["site_id"],
+                "site_name": site["site_name"],
+                "city": site.get("city", "Coimbatore"),
+                "location": {"name": site.get("city", "Coimbatore"), "latitude": site["latitude"], "longitude": site["longitude"]},
+                "assets": site.get("asset_ids", {"transformer_id": f"TX-{site['site_id']}", "chiller_id": f"CH-{site['site_id']}", "water_pump_id": f"WP-{site['site_id']}"})
+            }
+        else:
+            site_cfg = get_active_site_config()
+
         location = req_data.get("location", site_cfg["location"]["name"])
-        lat = req_data.get("latitude", site_cfg["location"]["latitude"])
-        lon = req_data.get("longitude", site_cfg["location"]["longitude"])
+        
+        lat_val = req_data.get("latitude", site_cfg["location"]["latitude"])
+        lon_val = req_data.get("longitude", site_cfg["location"]["longitude"])
+        if "latitude" in req_data or "longitude" in req_data:
+            is_valid, err = validate_coordinates(lat_val, lon_val)
+            if not is_valid:
+                return jsonify({"success": False, "error": err}), 400
+        lat = float(lat_val)
+        lon = float(lon_val)
+
         tx_id = req_data.get("tx_id", site_cfg["assets"]["transformer_id"])
 
         # 1. Weather API Client (Using Exact Coordinates)
-        weather_normalized = weather_client_inst.get_current_data(location=location, latitude=lat, longitude=lon)
+        weather_normalized = weather_client_inst.get_current_data(location=location, latitude=lat, longitude=lon, site_id=site_cfg.get("site_id", "SITE-001"))
         climate_data = weather_normalized["data"]
 
         # 2. Transformer Telemetry Client
@@ -1763,6 +1869,35 @@ def site_analyze_endpoint(site_id):
     scenario_name = request.args.get("scenario")
     res = analyze_site_internal(site_id, scenario_name=scenario_name)
     return jsonify(res)
+
+@app.route("/api/sites/<site_id>/climate", methods=["GET"])
+def site_climate_endpoint(site_id):
+    site = site_registry.get_site(site_id)
+    if not site:
+        return jsonify({"success": False, "error": f"Site '{site_id}' not found."}), 404
+
+    lat = site["latitude"]
+    lon = site["longitude"]
+    location = site.get("city", site.get("site_name", "Coimbatore"))
+
+    site_cfg = {
+        "site_id": site["site_id"],
+        "site_name": site["site_name"],
+        "city": location,
+        "location": {"name": location, "latitude": lat, "longitude": lon},
+        "assets": site.get("asset_ids", {"transformer_id": f"TX-{site_id}", "chiller_id": f"CH-{site_id}", "water_pump_id": f"WP-{site_id}"}),
+        "climate_thresholds": {"heatwave_threshold_temp": 35.0, "heatwave_threshold_hours": 3}
+    }
+
+    w_norm = weather_client_inst.get_current_data(location=location, latitude=lat, longitude=lon, site_id=site_id)
+    intel = analyze_climate_intelligence(w_norm["data"], site_cfg)
+
+    return jsonify({
+        "success": True,
+        "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),
+        "site": site,
+        "climate_intelligence": intel
+    })
 
 @app.route("/api/regional/incidents", methods=["GET"])
 def regional_incidents_endpoint():

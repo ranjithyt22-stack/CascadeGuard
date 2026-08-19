@@ -1,0 +1,37 @@
+{
+  "model_id": "Model-2-TransformerThermal",
+  "version": "v1.1-chronological",
+  "training_timestamp": "2026-08-19 15:50:00",
+  "dataset": "data/processed/transformer_processed.csv",
+  "train_period": "2019-06-27 10:53:00 to 2019-11-24 04:45:00",
+  "val_period": "2019-11-24 05:00:00 to 2020-02-13 11:10:00",
+  "test_period": "2020-02-13 11:15:00 to 2020-04-13 20:45:00",
+  "features": [
+    "load",
+    "current",
+    "voltage",
+    "pf",
+    "ambient_temp",
+    "OTI",
+    "WTI",
+    "OLI",
+    "oti_lag1",
+    "oti_lag5",
+    "wti_lag1"
+  ],
+  "target": "target_oti_15m",
+  "metrics": {
+    "mae_degc": 3.78,
+    "rmse_degc": 5.93,
+    "r2": 0.2189
+  },
+  "baselines": {
+    "baseline_naive_mae": 5.23,
+    "baseline_naive_r2": 0.0478
+  },
+  "leakage_status": "PASS",
+  "threshold_config": {
+    "warning_oti_degc": 75.0,
+    "critical_oti_degc": 90.0
+  }
+}

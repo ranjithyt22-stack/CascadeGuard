@@ -1,0 +1,95 @@
+{
+  "model_id": "Model-4-ChillerFault",
+  "version": "v1.1-rf",
+  "training_timestamp": "2026-08-19 15:50:00",
+  "dataset": "data/raw/chiller/11000.xlsx",
+  "features": [
+    "TEI",
+    "TEO",
+    "TCI",
+    "TCO",
+    "kW",
+    "TEA",
+    "TCA",
+    "TRE",
+    "TRC",
+    "TRC_sub",
+    "T_suc",
+    "Tsh_suc",
+    "TR_dis",
+    "Tsh_dis",
+    "TO_sump",
+    "PO_net"
+  ],
+  "target": "label",
+  "metrics": {
+    "accuracy": 0.0182,
+    "macro_f1": 0.044
+  },
+  "leakage_status": "PASS (Steady-State Cycle Telemetry)",
+  "confusion_matrix": [
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    [
+      724,
+      26,
+      231,
+      0,
+      0,
+      19,
+      0
+    ],
+    [
+      108,
+      31,
+      0,
+      21,
+      0,
+      40,
+      0
+    ],
+    [
+      105,
+      0,
+      0,
+      894,
+      0,
+      1,
+      0
+    ]
+  ]
+}

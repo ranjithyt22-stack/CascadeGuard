@@ -1,0 +1,9 @@
+dataset_name,file_path,format,total_rows,total_columns,size_bytes,missing_values,duplicate_rows,timestamp_column,sampling_frequency,key_variables,target_candidates
+Chiller Telemetry & Faults,data/raw/chiller/11000.xlsx,XLSX,11000,17,954679,0,0,None,Cycle steady-state,"TEI, TEO, TCI, TCO, kW, TEA, TCA, TRE, TRC, TRC_sub, T_suc, Tsh_suc, TR_dis, Tsh_dis, TO_sump, PO_net",label (8-class fault)
+Transformer Current & Voltage,data/raw/transformer/CurrentVoltage.csv,CSV,19352,11,1428576,0,440,DeviceTimeStamp,1-2 minutes,"VL1, VL2, VL3, IL1, IL2, IL3, VL12, VL23, VL31, INUT",Electrical load inputs
+Transformer DGA & Health Index,data/raw/transformer/Health index1.csv,CSV,470,16,26028,0,0,None,Periodic lab test,"Hydrogen, Oxigen, Nitrogen, Methane, CO, CO2, Ethylene, Ethane, Acethylene, DBDS, Power factor, Interfacial V, Dielectric rigidity, Water content",Health index & Life expectation
+Transformer Thermal & Overview,data/raw/transformer/Overview.csv,CSV,20316,8,1003649,0,1475,DeviceTimeStamp,1-2 minutes,"OTI, WTI, ATI, OLI, OTI_A, OTI_T, MOG_A","OTI (Oil Temp), WTI (Winding Temp), thermal event label"
+Transformer Phase Power,data/raw/transformer/Power.csv,CSV,19309,10,1183477,0,429,DeviceTimeStamp,1-2 minutes,"WL1, WL2, WL3, VAL1, VAL2, VAL3, RVAL1, RVAL2, RVAL3",Phase active & reactive power inputs
+Transformer Power Factor & Harmonics,data/raw/transformer/PowerFactor.csv,CSV,19308,16,1739626,0,1,DeviceTimeStamp,1-2 minutes,"PFL1, PFL2, PFL3, Avg_PF, Sum_PF, FRQ, THDVL1-3, THDIL1-3, MDIL1-3",Power quality & harmonic distortion
+Transformer Total Power & Energy,data/raw/transformer/TotalPower.csv,CSV,19248,9,1560439,0,393,DeviceTimeStamp,1-2 minutes,"KWH, KWH_I, KVARH, KW, KVA, KVAR, MPD, MKVAD","KW, KVA total load & peak demand"
+Water Pump RUL & Sensor Telemetry,data/raw/water_pump/rul_hrs.csv,CSV,166441,53,89321082,10208+,0,timestamp,1 minute,"sensor_00 to sensor_51 (vibration, flow, pressure, current, temp)",rul (Remaining Useful Life in hours)

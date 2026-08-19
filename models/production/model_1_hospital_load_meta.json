@@ -1,0 +1,32 @@
+{
+  "model_id": "Model-1-HospitalLoad",
+  "version": "v1.1-chronological",
+  "training_timestamp": "2026-08-19 15:50:00",
+  "dataset": "data/processed/hospital_load_processed.csv (Mapped Demonstration Data)",
+  "train_period": "2019-06-27 11:28:00 to 2019-11-24 08:45:00",
+  "val_period": "2019-11-24 09:01:00 to 2020-02-13 14:45:00",
+  "test_period": "2020-02-13 15:00:00 to 2020-04-14 00:30:00",
+  "features": [
+    "ambient_temp",
+    "hour",
+    "day_of_week",
+    "load_lag1",
+    "load_lag6",
+    "load_lag24",
+    "temp_lag1"
+  ],
+  "target": "total_load_kw",
+  "metrics": {
+    "mae_kw": 56.55,
+    "rmse_kw": 78.78,
+    "r2": 0.9117,
+    "mape_pct": 3.23
+  },
+  "baselines": {
+    "baseline_lag1_mae": 45.51,
+    "baseline_lag24_mae": 281.34,
+    "baseline_roll24_mae": 108.44
+  },
+  "leakage_status": "PASS",
+  "provenance_note": "Dataset represents mapped demonstration facility load derived from transformer power telemetry. Not raw KMCH IoT telemetry."
+}
